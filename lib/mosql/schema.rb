@@ -97,7 +97,6 @@ module MoSQL
         collection[:related].each do |reltable, details|
           log.info("Creating table '#{reltable}'...")
           db.send(clobber ? :create_table! : :create_table?, reltable) do
-            primary_key :__id
 
             details.each do |col|
               column col[:name], col[:type]
