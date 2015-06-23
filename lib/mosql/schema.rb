@@ -178,7 +178,7 @@ module MoSQL
       case value
       when BSON::Binary, BSON::ObjectId
         if [:DATE, :TIMESTAMP, :TIME].include? type.to_sym
-          Time.at value.to_s[0...8].to_i(16)
+          Time.at(value.to_s[0...8].to_i(16)).utc
         else
           value.to_s
         end
