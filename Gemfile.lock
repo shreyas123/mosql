@@ -17,7 +17,7 @@ GEM
     bson (1.12.5)
     bson_ext (1.12.5)
       bson (~> 1.12.5)
-    json (1.7.7)
+    json (2.0.2)
     log4r (1.1.10)
     metaclass (0.0.1)
     minitest (3.0.0)
@@ -40,3 +40,6 @@ DEPENDENCIES
   minitest
   mocha
   mosql!
+
+BUNDLED WITH
+   1.13.6
