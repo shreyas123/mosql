@@ -136,6 +136,7 @@ EOF
                  {'_id' => "a"},
                  {'_id' => "b"}
                 ]
+      Sequel.database_timezone = Time.now.zone
       before = @sequel.select(Sequel.function(:NOW)).first[:now]
       @specialmap.copy_data(@sequel, 'db.collection',
                             objects.map { |o| @specialmap.transform('db.collection', o) } )
