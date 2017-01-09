@@ -17,6 +17,7 @@ module MoSQL
     def connect_sql
       begin
         conn = Sequel.connect(sql_test_uri)
+        conn.extension :pg_array
         conn.test_connection
         conn
       rescue Sequel::DatabaseConnectionError
@@ -57,6 +58,7 @@ EOF
     end
 
     def setup
+      Sequel.default_timezone = :utc
       @sequel = connect_sql
       @mongo  = connect_mongo
       super
