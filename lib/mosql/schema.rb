@@ -32,9 +32,9 @@ module MoSQL
       end
     end
 
-    def check_columns!(ns, spec)
+    def check_columns!(ns, columns)
       seen = Set.new
-      spec[:columns].each do |col|
+      columns.each do |col|
         if seen.include?(col[:source])
           raise SchemaError.new("Duplicate source #{col[:source]} in column definition #{col[:name]} for #{ns}.")
         end
@@ -42,10 +42,20 @@ module MoSQL
       end
     end
 
+    def parse_related_spec(spec)
+      spec.fetch(:related, {}).map do |k,v|
+        [k, to_array(v)]
+      end.to_h
+    end
+
     def parse_spec(ns, spec)
       out = spec.dup
       out[:columns] = to_array(spec.fetch(:columns))
-      check_columns!(ns, out)
+      out[:related] = parse_related_spec(spec)
+      check_columns!(ns, out[:columns])
+      out[:related].values.each do |columns|
+        check_columns!(ns, columns)
+      end
       out
     end
 
@@ -75,21 +85,31 @@ module MoSQL
       Sequel.default_timezone = :utc
     end
 
-    def create_schema(db, clobber=false)
-      @map.values.each do |dbspec|
-        dbspec.each do |n, collection|
-          next unless n.is_a?(String)
-          meta = collection[:meta]
-          composite_key = meta[:composite_key]
-          keys = []
-          log.info("Creating table '#{meta[:table]}'...")
-          db.send(clobber ? :create_table! : :create_table?, meta[:table]) do
-            collection[:columns].each do |col|
-              opts = {}
-              if col[:source] == '$timestamp'
-                opts[:default] = Sequel.function(:now)
-              end
-              column col[:name], col[:type], opts
+    def create_schema_for_related_tables(db, related, clobber)
+      return unless related
+      related.map do |name,columns|
+        log.info("Creating related table '#{name}'...")
+        db.send(clobber ? :create_table! : :create_table?, name) do
+          columns.each do |col|
+            column col[:name], col[:type]
+          end
+
+        end
+      end
+    end
+
+    def create_schema_for_collection(db, collection, clobber)
+      meta = collection[:meta]
+      composite_key = meta[:composite_key]
+      keys = []
+      log.info("Creating table '#{meta[:table]}'...")
+      db.send(clobber ? :create_table! : :create_table?, meta[:table]) do
+        collection[:columns].each do |col|
+          opts = {}
+          if col[:source] == '$timestamp'
+            opts[:default] = Sequel.function(:now)
+          end
+          column col[:name], col[:type], opts
 
               if composite_key and composite_key.include?(col[:name])
                 keys << col[:name].to_sym
@@ -111,7 +131,16 @@ module MoSQL
                 end
               column '_extra_props', type
             end
-          end
+      end
+    end
+
+    def create_schema(db, clobber=false)
+      @map.values.each do |dbspec|
+        dbspec.each do |n, collection|
+          next unless n.is_a?(String)
+          create_schema_for_collection(db, collection, clobber)
+          create_schema_for_related_tables(db, collection[:related], clobber)
+
         end
       end
     end

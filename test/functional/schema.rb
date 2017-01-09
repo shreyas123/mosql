@@ -104,6 +104,40 @@ EOF
     assert_equal(o['_id'].to_s, table.select.first[:_id])
   end
 
+  describe "related fields" do
+    RELATED_MAP = <<-EOF
+db:
+  parents:
+    :meta:
+      :table: related_main
+    :columns:
+      - _id: TEXT
+      - uuid:
+        :source: uuid
+        :type: uuid
+    :related:
+      :children:
+        - child_id:
+          :source: children[]._id
+          :type: INT
+        - parent_id:
+          :source: uuid
+          :type: uuid
+    EOF
+    before do
+      @related_map = MoSQL::Schema.new(YAML.load(RELATED_MAP))
+
+      @sequel.drop_table?(:related_main)
+      @sequel.drop_table?(:children)
+      @related_map.create_schema(@sequel)
+    end
+
+    it "can create db by schema" do
+      assert_equal([:_id,:uuid],@sequel[:related_main].columns)
+      assert_equal([:child_id, :parent_id], @sequel[:children].columns)
+    end
+  end
+
   describe 'special fields' do
   SPECIAL_MAP = <<EOF
 ---
