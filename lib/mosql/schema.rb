@@ -184,23 +184,18 @@ module MoSQL
       schema
     end
 
+    def fetch_and_delete_ary_dotted(obj, key, pieces)
+
+    end
+
     def fetch_and_delete_dotted(obj, dotted)
-      pieces = dotted.split(".")
-      breadcrumbs = []
-      while pieces.length > 1
-        key = pieces.shift
-        breadcrumbs << [obj, key]
-        obj = obj[key]
-        return nil unless obj.is_a?(Hash)
-      end
-
-      val = obj.delete(pieces.first)
-
-      breadcrumbs.reverse.each do |obj, key|
-        obj.delete(key) if obj[key].empty?
-      end
-
-      val
+      key, rest = dotted.split(".", 2)
+      obj ||= {}
+      return nil unless obj.has_key?(key)
+      return obj.delete(key) unless rest
+      val = fetch_and_delete_dotted(obj[key], rest)
+      obj.delete(key) if obj[key].empty?
+      return val
     end
 
     def fetch_exists(obj, dotted)
