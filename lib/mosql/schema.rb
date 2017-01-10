@@ -154,8 +154,20 @@ module MoSQL
       @map[db]
     end
 
+    def related_schema(schema, relation)
+      return schema unless relation
+      {
+        columns: schema[:related][relation.to_sym],
+        meta: { table: relation }
+      }
+    end
+
     def find_ns(ns)
-      db, collection = ns.split(".", 2)
+      if matched = ns.match(/([^.]+)\.(.+)\.related\.(.+)/)
+        _, db, collection, relation = *matched.to_a
+      else
+        db, collection = ns.split(".", 2)
+      end
       unless spec = find_db(db)
         return nil
       end
@@ -163,7 +175,7 @@ module MoSQL
         log.debug("No mapping for ns: #{ns}")
         return nil
       end
-      schema
+      related_schema(schema, relation)
     end
 
     def find_ns!(ns)
@@ -250,19 +262,19 @@ module MoSQL
           v = fetch_special_source(obj, source, original)
         else
           v = fetch_and_delete_dotted(obj, source)
-          case v
-          when Hash
-            v = JSON.dump(Hash[v.map { |k,v| [k, transform_primitive(v)] }])
-          when Array
-            v = v.map { |it| transform_primitive(it) }
-            if col[:array_type]
-              v = Sequel.pg_array(v, col[:array_type])
-            else
-              v = JSON.dump(v)
-            end
+        end
+        case v
+        when Hash
+          v = JSON.dump(Hash[v.map { |k,v| [k, transform_primitive(v)] }])
+        when Array
+          v = v.map { |it| transform_primitive(it) }
+          if col[:array_type]
+            v = Sequel.pg_array(v, col[:array_type])
           else
-            v = transform_primitive(v, type)
+            v = JSON.dump(v)
           end
+        else
+          v = transform_primitive(v, type)
         end
         row << v
       end
