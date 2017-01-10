@@ -117,7 +117,7 @@ db:
         :type: uuid
     :related:
       :children:
-        - child_id:
+        - _id:
           :source: children[]._id
           :type: INT
         - parent_id:
@@ -132,9 +132,25 @@ db:
       @related_map.create_schema(@sequel)
     end
 
+    let(:parent_table) { @sequel[:related_main] }
+    let(:children_table) { @sequel[:children] }
+
     it "can create db by schema" do
       assert_equal([:_id,:uuid],@sequel[:related_main].columns)
-      assert_equal([:child_id, :parent_id], @sequel[:children].columns)
+      assert_equal([:_id, :parent_id], @sequel[:children].columns)
+    end
+
+    it "can copy data" do
+      objects = [{ _id: "a", uuid: SecureRandom.uuid, children: [{_id: "child_a"}]}]
+      @related_map.copy_data(@sequel, "db.parents", objects.map { |o| @related_map.transform("db.parents", o) } )
+      require 'pry'
+      #binding.pry
+      $pp = true
+      #TODO get transform works
+      objects.map { |o| @related_map.transform("db.parents.related.children", o) }
+      first_parent_obj = objects[0].select{|k,v| [:_id, :uuid].include?(k)}
+      assert_equal(first_parent_obj, parent_table.first(_id: "a"))
+
     end
   end
 
