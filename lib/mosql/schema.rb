@@ -184,13 +184,23 @@ module MoSQL
       schema
     end
 
-    def fetch_and_delete_ary_dotted(obj, key, pieces)
+    class ChildrenArray < Array
+    end
 
+    def fetch_and_delete_ary_dotted(obj, key, rest)
+      real_key = key.delete("[]")
+      return nil unless obj.has_key?(real_key)
+      result = obj[real_key].map do |o|
+        fetch_and_delete_dotted(o, rest)
+      end
+      obj.delete(real_key) if obj[real_key].all?{|o| o.empty?}
+      ChildrenArray.new(result)
     end
 
     def fetch_and_delete_dotted(obj, dotted)
       key, rest = dotted.split(".", 2)
       obj ||= {}
+      return fetch_and_delete_ary_dotted(obj, key, rest) if key.end_with?("[]")
       return nil unless obj.has_key?(key)
       return obj.delete(key) unless rest
       val = fetch_and_delete_dotted(obj[key], rest)
@@ -261,6 +271,8 @@ module MoSQL
         case v
         when Hash
           v = JSON.dump(Hash[v.map { |k,v| [k, transform_primitive(v)] }])
+        when ChildrenArray
+          #noop
         when Array
           v = v.map { |it| transform_primitive(it) }
           if col[:array_type]
