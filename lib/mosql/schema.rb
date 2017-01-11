@@ -248,6 +248,11 @@ module MoSQL
       end
     end
 
+    def transform_related(ns, obj, schema=nil)
+      row = transform(ns, obj, schema)
+      unfold_rows(row)
+    end
+
     def transform(ns, obj, schema=nil)
       schema ||= find_ns!(ns)
 
@@ -294,6 +299,13 @@ module MoSQL
       log.debug { "Transformed: #{row.inspect}" }
 
       row
+    end
+
+    def unfold_rows(row)
+      # Convert row [a, [b, c], d] into [[a, b, d], [a, c, d]]
+      depth = row.select {|r| r.is_a? Array}.map {|r| [r].flatten.length }.max
+      row.map! {|r| [r].flatten.cycle.take(depth)}
+      row.first.zip(*row.drop(1))
     end
 
     def sanitize(value)

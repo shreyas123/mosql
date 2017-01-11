@@ -119,7 +119,7 @@ db:
       :children:
         - _id:
           :source: children[]._id
-          :type: INT
+          :type: TEXT
         - parent_id:
           :source: uuid
           :type: uuid
@@ -141,15 +141,18 @@ db:
     end
 
     it "can copy data" do
-      objects = [{ _id: "a", uuid: SecureRandom.uuid, children: [{_id: "child_a"}]}]
+      objects = [
+        { _id: "a", uuid: SecureRandom.uuid, children: [{_id: "a_a"}, {_id: "a_b"}]},
+        { _id: "b", uuid: SecureRandom.uuid, children: [{_id: "b_a"}, {_id: "b_b"}]}
+      ]
       @related_map.copy_data(@sequel, "db.parents", objects.map { |o| @related_map.transform("db.parents", o) } )
-      require 'pry'
-      #binding.pry
-      $pp = true
-      #TODO get transform works
-      objects.map { |o| @related_map.transform("db.parents.related.children", o) }
+      mapped = objects.flat_map { |o| @related_map.transform_related("db.parents.related.children", o) }
+      @related_map.copy_data(@sequel, "db.parents.related.children", mapped)
       first_parent_obj = objects[0].select{|k,v| [:_id, :uuid].include?(k)}
       assert_equal(first_parent_obj, parent_table.first(_id: "a"))
+      first_child_obj = objects[0][:children][0]
+      first_child_obj[:parent_id] = first_parent_obj[:uuid]
+      assert_equal(first_child_obj, children_table.first(_id: "a_a"))
 
     end
   end
