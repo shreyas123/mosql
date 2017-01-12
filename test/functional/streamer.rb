@@ -345,6 +345,55 @@ EOF
       assert_equal(ids.map(&:to_s).sort, sqlobjs.map { |o| o[:_id] }.sort)
     end
   end
+
+  describe 'related models' do
+    RELATED_MAP = <<-EOF
+db:
+  parents:
+    :meta:
+      :table: related_main
+    :columns:
+      - _id: TEXT
+      - uuid:
+        :source: uuid
+        :type: uuid
+    :related:
+      :children:
+        - _id:
+          :source: children[]._id
+          :type: TEXT
+        - parent_id:
+          :source: uuid
+          :type: uuid
+    EOF
+
+    before do
+      @map = MoSQL::Schema.new(YAML.load(RELATED_MAP))
+      @adapter = MoSQL::SQLAdapter.new(@map, sql_test_uri)
+
+      mongo['db']['parents'].drop
+      @sequel.drop_table?(:related_main)
+      @sequel.drop_table?(:children)
+      @map.create_schema(@sequel)
+
+      @streamer = build_streamer
+    end
+
+    it "create objects from initial import" do
+      objects = [
+        { _id: "a", uuid: SecureRandom.uuid, children: [{_id: "a_a"}, {_id: "a_b"}]}
+      ]
+      mongo["db"]["parents"].insert(objects[0])
+      @streamer.options[:skip_tail] = true
+      @streamer.initial_import
+      parent_row = @sequel[:related_main].select.to_a
+      assert_equal(1, parent_row.length)
+      children_rows = @sequel[:children].select.to_a
+      assert_equal(2, children_rows.length)
+    end
+
+  end
+
   describe 'timestamps' do
   TIMESTAMP_MAP = <<EOF
 ---
