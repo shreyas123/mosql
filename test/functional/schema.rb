@@ -140,8 +140,8 @@ db:
       assert_equal([:_id, :parent_id], @sequel[:children].columns)
     end
 
-    it "can get related_ns" do
-      assert_equal(@related_map.related_ns("db.parents"), ["db.parents.related.children"])
+    it "can get all_related_ns" do
+      assert_equal(@related_map.all_related_ns("db.parents"), ["db.parents.related.children"])
     end
 
     it "can copy data" do
