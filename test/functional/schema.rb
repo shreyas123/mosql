@@ -140,6 +140,10 @@ db:
       assert_equal([:_id, :parent_id], @sequel[:children].columns)
     end
 
+    it "can get related_ns" do
+      assert_equal(@related_map.related_ns("db.parents"), [:children])
+    end
+
     it "can copy data" do
       objects = [
         { _id: "a", uuid: SecureRandom.uuid, children: [{_id: "a_a"}, {_id: "a_b"}]},

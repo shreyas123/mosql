@@ -162,6 +162,11 @@ module MoSQL
       }
     end
 
+    def related_ns(ns)
+      main_ns = find_ns(ns)
+      main_ns.fetch( :related, {} ).keys
+    end
+
     def find_ns(ns)
       if matched = ns.match(/([^.]+)\.(.+)\.related\.(.+)/)
         _, db, collection, relation = *matched.to_a
