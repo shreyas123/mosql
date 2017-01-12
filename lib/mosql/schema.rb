@@ -164,7 +164,8 @@ module MoSQL
 
     def related_ns(ns)
       main_ns = find_ns(ns)
-      main_ns.fetch( :related, {} ).keys
+      related_keys = main_ns.fetch( :related, {} ).keys
+      related_keys.map{|k| "#{ns}.related.#{k.to_s}"}
     end
 
     def find_ns(ns)

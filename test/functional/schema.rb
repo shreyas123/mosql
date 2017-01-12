@@ -141,7 +141,7 @@ db:
     end
 
     it "can get related_ns" do
-      assert_equal(@related_map.related_ns("db.parents"), [:children])
+      assert_equal(@related_map.related_ns("db.parents"), ["db.parents.related.children"])
     end
 
     it "can copy data" do
