@@ -363,6 +363,9 @@ db:
           :source: children[]._id
           :type: TEXT
           :primary_key: true
+        - info:
+          :source: children[].info
+          :type: TEXT
         - parent_id:
           :source: uuid
           :type: uuid
@@ -410,6 +413,30 @@ db:
       assert_equal(1, parent_row.length)
       children_rows = @sequel[:children].select.to_a
       assert_equal(2, children_rows.length)
+    end
+
+    it "can update when tailing" do
+      objects = [
+        { _id: "a", uuid: SecureRandom.uuid, children: [{_id: "a_a", info: "im a"}, {_id: "a_b", info: "im b"}]}
+      ]
+      id = mongo["db"]["parents"].insert(objects[0])
+      @streamer.options[:skip_tail] = true
+      @streamer.initial_import
+      op = {
+          "h"  => -965650193548512061,
+          "v"  => 2,
+          "op" => "u",
+          "ns" => "db.parents",
+          "o" => {"$set" => { "children[0].info" => "new info"}},
+          "o2" => {"_id" => id}
+      }
+      objects[0][:children][0][:info] = "new info"
+      mongo["db"]["parents"].update( {_id: id}, { "$set" => {children: objects[0][:children]}})
+      @streamer.handle_op(op)
+      children_rows = @sequel[:children].select.to_a
+      assert_equal(2, children_rows.length)
+      first_child = @sequel[:children].where(:_id => "a_a").select.to_a[0]
+      assert_equal(first_child[:info], "new info")
     end
 
     it "can prevent creating duplicate related row"
