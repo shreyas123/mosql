@@ -13,12 +13,14 @@ module MoSQL
             :source => ent.fetch(:source),
             :type   => ent.fetch(:type),
             :name   => (ent.keys - [:source, :type]).first,
+            :primary_key => ent.fetch(:primary_key, false)
           }
         elsif ent.is_a?(Hash) && ent.keys.length == 1 && ent.values.first.is_a?(String)
           col = {
             :source => ent.first.first,
             :name   => ent.first.first,
-            :type   => ent.first.last
+            :type   => ent.first.last,
+            :primary_key => ent.fetch(:primary_key, false)
           }
         else
           raise SchemaError.new("Invalid ordered hash entry #{ent.inspect}")
@@ -412,7 +414,7 @@ module MoSQL
       if ns[:meta][:composite_key]
         keys = ns[:meta][:composite_key]
       else
-        keys << ns[:columns].find {|c| c[:source] == '_id'}[:name]
+        keys << ns[:columns].find {|c| c[:source] == '_id' || c.fetch(:primary_key)}[:name]
       end
 
       return keys

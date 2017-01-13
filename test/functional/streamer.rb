@@ -362,6 +362,7 @@ db:
         - _id:
           :source: children[]._id
           :type: TEXT
+          :primary_key: true
         - parent_id:
           :source: uuid
           :type: uuid
@@ -391,6 +392,27 @@ db:
       children_rows = @sequel[:children].select.to_a
       assert_equal(2, children_rows.length)
     end
+
+    it "can tail oplog" do
+      objects = [
+        { _id: "a", uuid: SecureRandom.uuid, children: [{_id: "a_a"}, {_id: "a_b"}]}
+      ]
+      id = mongo["db"]["parents"].insert(objects[0])
+      op = {
+          "h"  => -965650193548512060,
+          "v"  => 2,
+          "op" => "i",
+          "ns" => "db.parents",
+          "o" => mongo["db"]["parents"].find_one({_id: id})
+      }
+      @streamer.handle_op(op)
+      parent_row = @sequel[:related_main].select.to_a
+      assert_equal(1, parent_row.length)
+      children_rows = @sequel[:children].select.to_a
+      assert_equal(2, children_rows.length)
+    end
+
+    it "can prevent creating duplicate related row"
 
   end
 

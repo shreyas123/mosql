@@ -120,6 +120,7 @@ db:
         - _id:
           :source: children[]._id
           :type: TEXT
+          :primary_key: true
         - parent_id:
           :source: uuid
           :type: uuid
@@ -142,6 +143,10 @@ db:
 
     it "can get all_related_ns" do
       assert_equal(@related_map.all_related_ns("db.parents"), ["db.parents.related.children"])
+    end
+
+    it "can get primary_key for children ns" do
+      assert_equal(@related_map.primary_sql_key_for_ns("db.parents.related.children"), ["_id"])
     end
 
     it "can copy data" do
