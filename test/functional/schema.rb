@@ -146,7 +146,7 @@ db:
     end
 
     it "can reuse source column if needed" do
-      object = [
+      objects = [
         { _id: "a", reused: "test"},
       ]
       @post_process_map.copy_data(@sequel, "db.post_process", objects.map { |o| @post_process_map.transform("db.post_process", o)})

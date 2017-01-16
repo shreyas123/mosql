@@ -19,7 +19,8 @@ module MoSQL
             :type   => ent.fetch(:type),
             :name   => (ent.keys - [:source, :type]).first,
             :post_process => compile_post_process(ent.fetch(:post_process, nil)),
-            :primary_key => ent.fetch(:primary_key, false)
+            :primary_key => ent.fetch(:primary_key, false),
+            :reused => ent.fetch(:reused, false),
           }
         elsif ent.is_a?(Hash) && ent.keys.length == 1 && ent.values.first.is_a?(String)
           col = {
@@ -27,7 +28,8 @@ module MoSQL
             :name   => ent.first.first,
             :type   => ent.first.last,
             :primary_key => ent.fetch(:primary_key, false),
-            :post_process => nil
+            :post_process => nil,
+            :reused => false,
           }
         else
           raise SchemaError.new("Invalid ordered hash entry #{ent.inspect}")
@@ -44,6 +46,7 @@ module MoSQL
     def check_columns!(ns, columns)
       seen = Set.new
       columns.each do |col|
+        next if col[:reused]
         if seen.include?(col[:source])
           raise SchemaError.new("Duplicate source #{col[:source]} in column definition #{col[:name]} for #{ns}.")
         end
@@ -202,24 +205,28 @@ module MoSQL
     class ChildrenArray < Array
     end
 
-    def fetch_and_delete_ary_dotted(obj, key, rest)
+    def fetch_and_delete_ary_dotted(obj, key, rest, reused=false)
       real_key = key.delete("[]")
       return nil unless obj.has_key?(real_key)
       result = obj[real_key].map do |o|
-        fetch_and_delete_dotted(o, rest)
+        fetch_and_delete_dotted(o, rest, reused)
       end
       obj.delete(real_key) if obj[real_key].all?{|o| o.empty?}
       ChildrenArray.new(result)
     end
 
-    def fetch_and_delete_dotted(obj, dotted)
+    def fetch_and_delete_dotted(obj, dotted, reused=false)
       key, rest = dotted.split(".", 2)
       obj ||= {}
-      return fetch_and_delete_ary_dotted(obj, key, rest) if key.end_with?("[]")
+      return fetch_and_delete_ary_dotted(obj, key, rest, reused) if key.end_with?("[]")
       return nil unless obj.has_key?(key)
-      return obj.delete(key) unless rest
-      val = fetch_and_delete_dotted(obj[key], rest)
-      obj.delete(key) if obj[key].empty?
+      unless rest
+        result = obj.fetch(key)
+        obj.delete(key) unless reused
+        return result
+      end
+      val = fetch_and_delete_dotted(obj[key], rest, reused)
+      obj.delete(key) if obj[key].empty? and !reused
       return val
     end
 
@@ -282,11 +289,12 @@ module MoSQL
 
         source = col[:source]
         type = col[:type]
+        reused = col[:reused]
 
         if source.start_with?("$")
           v = fetch_special_source(obj, source, original)
         else
-          v = fetch_and_delete_dotted(obj, source)
+          v = fetch_and_delete_dotted(obj, source, reused)
         end
         case v
         when Hash
