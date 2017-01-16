@@ -116,6 +116,10 @@ db:
         :source: optional_data
         :post_process: lambda { |x| x || "default" }
         :type: TEXT
+      - dual_type_col:
+        :source: dual_type_col
+        :post_process: lambda { |x| x.to_i }
+        :type: integer
     EOF
     before do
       @post_process_map = MoSQL::Schema.new(YAML.load(POST_PROCESS_MAP))
@@ -132,7 +136,19 @@ db:
       b = @sequel[:post_process].select.first(_id: "b")
       assert_equal(b[:optional_data], "default")
     end
-    it "can convert type"
+
+    it "can convert type" do
+      objects = [
+        { _id: "a", dual_type_col: "5566"},
+        { _id: "b", dual_type_col: 5566},
+      ]
+      transformed = objects.map { |o| @post_process_map.transform("db.post_process", o)}
+      @post_process_map.copy_data(@sequel, "db.post_process", transformed)
+      a = @sequel[:post_process].select.first(_id: "a")
+      assert_equal(a[:dual_type_col], 5566)
+      b = @sequel[:post_process].select.first(_id: "b")
+      assert_equal(b[:dual_type_col], 5566)
+    end
 
   end
 
