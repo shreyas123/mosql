@@ -104,6 +104,38 @@ EOF
     assert_equal(o['_id'].to_s, table.select.first[:_id])
   end
 
+  describe "post_process" do
+    POST_PROCESS_MAP = <<-EOF
+db:
+  post_process:
+    :meta:
+      :table: post_process
+    :columns:
+      - _id: TEXT
+      - optional_data:
+        :source: optional_data
+        :post_process: lambda { |x| x || "default" }
+        :type: TEXT
+    EOF
+    before do
+      @post_process_map = MoSQL::Schema.new(YAML.load(POST_PROCESS_MAP))
+
+      @sequel.drop_table?(:post_process)
+      @post_process_map.create_schema(@sequel)
+    end
+    it "can set a default for an optional data" do
+      objects = [
+        { _id: "a", optional_data: "test"},
+        { _id: "b"},
+      ]
+      @post_process_map.copy_data(@sequel, "db.post_process", objects.map { |o| @post_process_map.transform("db.post_process", o)})
+      b = @sequel[:post_process].select.first(_id: "b")
+      assert_equal(b[:optional_data], "default")
+    end
+    it "can convert type"
+
+  end
+
   describe "related fields" do
     RELATED_MAP = <<-EOF
 db:
