@@ -120,6 +120,14 @@ db:
         :source: dual_type_col
         :post_process: lambda { |x| x.to_i }
         :type: integer
+      - reused_a:
+        :source: reused
+        :reused: true
+        :type: TEXT
+      - reused_b:
+        :source: reused
+        :reused: true
+        :type: TEXT
     EOF
     before do
       @post_process_map = MoSQL::Schema.new(YAML.load(POST_PROCESS_MAP))
@@ -135,6 +143,16 @@ db:
       @post_process_map.copy_data(@sequel, "db.post_process", objects.map { |o| @post_process_map.transform("db.post_process", o)})
       b = @sequel[:post_process].select.first(_id: "b")
       assert_equal(b[:optional_data], "default")
+    end
+
+    it "can reuse source column if needed" do
+      object = [
+        { _id: "a", reused: "test"},
+      ]
+      @post_process_map.copy_data(@sequel, "db.post_process", objects.map { |o| @post_process_map.transform("db.post_process", o)})
+      a = @sequel[:post_process].select.first(_id: "a")
+      assert_equal(a[:reused_a], "test")
+      assert_equal(a[:reused_b], "test")
     end
 
     it "can convert type" do
