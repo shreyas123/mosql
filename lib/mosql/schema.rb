@@ -4,6 +4,11 @@ module MoSQL
   class Schema
     include MoSQL::Logging
 
+    def compile_post_process(str)
+      return nil unless str && str.length > 0
+      eval(str)
+    end
+
     def to_array(lst)
       lst.map do |ent|
         col = nil
@@ -13,6 +18,7 @@ module MoSQL
             :source => ent.fetch(:source),
             :type   => ent.fetch(:type),
             :name   => (ent.keys - [:source, :type]).first,
+            :post_process => compile_post_process(ent.fetch(:post_process, nil)),
             :primary_key => ent.fetch(:primary_key, false)
           }
         elsif ent.is_a?(Hash) && ent.keys.length == 1 && ent.values.first.is_a?(String)
@@ -20,7 +26,8 @@ module MoSQL
             :source => ent.first.first,
             :name   => ent.first.first,
             :type   => ent.first.last,
-            :primary_key => ent.fetch(:primary_key, false)
+            :primary_key => ent.fetch(:primary_key, false),
+            :post_process => nil
           }
         else
           raise SchemaError.new("Invalid ordered hash entry #{ent.inspect}")
@@ -296,6 +303,8 @@ module MoSQL
         else
           v = transform_primitive(v, type)
         end
+        post_process_block = col[:post_process]
+        v = post_process_block.call(v) if post_process_block
         row << v
       end
 
