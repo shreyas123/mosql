@@ -17,7 +17,7 @@ module MoSQL
           col = {
             :source => ent.fetch(:source),
             :type   => ent.fetch(:type),
-            :name   => (ent.keys - [:source, :type]).first,
+            :name   => ent.fetch(:name, (ent.keys - [:source, :type]).first),
             :post_process => compile_post_process(ent.fetch(:post_process, nil)),
             :primary_key => ent.fetch(:primary_key, false),
             :reused => ent.fetch(:reused, false),

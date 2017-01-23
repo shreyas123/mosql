@@ -128,6 +128,11 @@ db:
         :source: reused
         :reused: true
         :type: TEXT
+      - :name: explicit_name
+        :source: not_exist
+        :reused: true
+        :type: TEXT
+        :post_process: lambda { |x| "explicit" }
     EOF
     before do
       @post_process_map = MoSQL::Schema.new(YAML.load(POST_PROCESS_MAP))
@@ -143,6 +148,16 @@ db:
       @post_process_map.copy_data(@sequel, "db.post_process", objects.map { |o| @post_process_map.transform("db.post_process", o)})
       b = @sequel[:post_process].select.first(_id: "b")
       assert_equal(b[:optional_data], "default")
+    end
+
+    it "can use an explict name" do
+      objects = [
+        { _id: "a", optional_data: "test"},
+        { _id: "b"},
+      ]
+      @post_process_map.copy_data(@sequel, "db.post_process", objects.map { |o| @post_process_map.transform("db.post_process", o)})
+      b = @sequel[:post_process].select.first(_id: "b")
+      assert_equal(b[:explicit_name], "explicit")
     end
 
     it "can reuse source column if needed" do
