@@ -259,6 +259,9 @@ db:
       - mosql_updated:
         :source: $timestamp
         :type: timestamp
+      - id:
+        :type: Serial
+        :source: $default
 EOF
 
     before do
@@ -272,6 +275,18 @@ EOF
       @sequel[:special].insert({_id: 'a'})
       row = @sequel[:special].select.first
       assert_instance_of(Time, row[:mosql_updated])
+    end
+
+    it 'Can set default on Serial when COPY' do
+      objects = [
+                 {'_id' => "a"},
+                 {'_id' => "b"}
+                ]
+      Sequel.database_timezone = Time.now.zone
+      @specialmap.copy_data(@sequel, 'db.collection',
+                            objects.map { |o| @specialmap.transform('db.collection', o) } )
+      rows = @sequel[:special].select.sort_by { |r| r[:_id] }
+      assert_operator(rows[0][:id], :<, rows[1][:id])
     end
 
     it 'Can populate $timestamp on COPY' do

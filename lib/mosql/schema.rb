@@ -292,6 +292,7 @@ module MoSQL
         reused = col[:reused]
 
         if source.start_with?("$")
+          next if source == "$default"
           v = fetch_special_source(obj, source, original)
         else
           v = fetch_and_delete_dotted(obj, source, reused)
@@ -354,7 +355,7 @@ module MoSQL
     end
 
     def copy_column?(col)
-      col[:source] != '$timestamp'
+      ['$timestamp', '$default'].include?(col[:source]).!
     end
 
     def all_columns(schema, copy=false)
