@@ -256,12 +256,12 @@ db:
       :table: special
     :columns:
       - _id: TEXT
-      - mosql_updated:
-        :source: $timestamp
-        :type: timestamp
       - id:
         :type: Serial
         :source: $default
+      - mosql_updated:
+        :source: $timestamp
+        :type: timestamp
 EOF
 
     before do

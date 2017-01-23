@@ -358,9 +358,14 @@ module MoSQL
       ['$timestamp', '$default'].include?(col[:source]).!
     end
 
+    def is_default?(col)
+      col[:source] == "$default"
+    end
+
     def all_columns(schema, copy=false)
       cols = []
       schema[:columns].each do |col|
+        next if is_default?(col)
         cols << col[:name] unless copy && !copy_column?(col)
       end
       if schema[:meta][:extra_props]

@@ -354,6 +354,9 @@ db:
       :table: related_main
     :columns:
       - _id: TEXT
+      - id:
+        :source: "$default"
+        :type: Serial
       - uuid:
         :source: uuid
         :type: uuid
