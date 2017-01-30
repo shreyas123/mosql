@@ -201,7 +201,7 @@ module MoSQL
       result = obj[real_key].map do |o|
         fetch_and_delete_dotted(o, rest)
       end
-      obj.delete(real_key) if obj[real_key].all?{|o| o.empty?}
+      # obj.delete(real_key) if obj[real_key].all?{|o| o.empty?}
       ChildrenArray.new(result)
     end
 
@@ -209,6 +209,7 @@ module MoSQL
       key, rest = dotted.split(".", 2)
       obj ||= {}
       return fetch_and_delete_ary_dotted(obj, key, rest) if key.end_with?("[]")
+      return obj.to_s if obj.class == BSON::ObjectId
       return nil unless obj.has_key?(key)
       return obj.delete(key) unless rest
       val = fetch_and_delete_dotted(obj[key], rest)
@@ -311,7 +312,7 @@ module MoSQL
 
     def unfold_rows(row)
       # Convert row [a, [b, c], d] into [[a, b, d], [a, c, d]]
-      depth = row.select {|r| r.is_a? Array}.map {|r| [r].flatten.length }.max
+      depth = row.select {|r| r.is_a? Array}.map {|r| [r].flatten.length }.max || 0
       row.map! {|r| [r].flatten.cycle.take(depth)}
       row.first.zip(*row.drop(1))
     end

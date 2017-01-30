@@ -3,6 +3,7 @@ require 'mongo'
 require 'sequel'
 require 'mongoriver'
 require 'json'
+require 'pry'
 
 require 'mosql/version'
 require 'mosql/log'

@@ -1,4 +1,5 @@
 require 'mosql'
+require 'pry'
 require 'optparse'
 require 'yaml'
 require 'logger'
