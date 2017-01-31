@@ -124,6 +124,9 @@ db:
         - parent_id:
           :source: uuid
           :type: uuid
+        - column_type:
+          :value: 'SHREYAS'
+          :type: TEXT
     EOF
     before do
       @related_map = MoSQL::Schema.new(YAML.load(RELATED_MAP))
@@ -138,7 +141,7 @@ db:
 
     it "can create db by schema" do
       assert_equal([:_id,:uuid],@sequel[:related_main].columns)
-      assert_equal([:_id, :parent_id], @sequel[:children].columns)
+      assert_equal([:_id, :parent_id, :column_type], @sequel[:children].columns)
     end
 
     it "can get all_related_ns" do
@@ -161,6 +164,7 @@ db:
       assert_equal(first_parent_obj, parent_table.first(_id: "a"))
       first_child_obj = objects[0][:children][0]
       first_child_obj[:parent_id] = first_parent_obj[:uuid]
+      first_child_obj[:column_type] = 'SHREYAS'
       assert_equal(first_child_obj, children_table.first(_id: "a_a"))
 
     end

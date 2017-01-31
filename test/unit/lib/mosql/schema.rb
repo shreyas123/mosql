@@ -14,6 +14,14 @@ db:
       - var: INTEGER
       - str: TEXT
       - arry: INTEGER ARRAY
+  with_value:
+    :columns:
+      - _id: TEXT
+      - str:
+        :value: 'Shreyas'
+        :type: TEXT
+    :meta:
+      :table: sqltable7
   with_extra_props:
     :meta:
       :table: sqltable2
@@ -116,7 +124,7 @@ EOF
     db.expects(:create_table?).with('sqltable4')
     db.expects(:create_table?).with('sqltable5')
     db.expects(:create_table?).with('sqltable6')
-
+    db.expects(:create_table?).with('sqltable7')
     @map.create_schema(db)
   end
 
@@ -150,6 +158,10 @@ EOF
     stub_6.expects(:column).with('time', 'TEXT', {})
     stub_6.expects(:column).with('var', 'TEXT', {})
     stub_6.expects(:primary_key).with([:store, :time])
+    stub_7 = stub('table 7')
+    stub_7.expects(:column).with('_id', 'TEXT', {})
+    stub_7.expects(:column).with('str', 'TEXT', {})
+    stub_7.expects(:primary_key).with([:_id])
     (class << db; self; end).send(:define_method, :create_table?) do |tbl, &blk|
       case tbl
       when "sqltable"
@@ -164,6 +176,8 @@ EOF
         o = stub_5
       when "sqltable6"
         o = stub_6
+      when "sqltable7"
+        o = stub_7
       else
         assert(false, "Tried to create an unexpected table: #{tbl}")
       end

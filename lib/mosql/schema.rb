@@ -7,7 +7,15 @@ module MoSQL
     def to_array(lst)
       lst.map do |ent|
         col = nil
-        if ent.is_a?(Hash) && ent[:source].is_a?(String) && ent[:type].is_a?(String)
+        if ent.is_a?(Hash) && ent[:value].is_a?(String) && ent[:type].is_a?(String)
+          # new configuration format
+          col = {
+            :source => '',
+            :name   => ent.first.first,
+            :value => ent.fetch(:value),
+            :type   => ent.fetch(:type)
+          }
+        elsif ent.is_a?(Hash) && ent[:source].is_a?(String) && ent[:type].is_a?(String)
           # new configuration format
           col = {
             :source => ent.fetch(:source),
@@ -95,7 +103,6 @@ module MoSQL
           columns.each do |col|
             column col[:name], col[:type]
           end
-
         end
       end
     end
@@ -113,26 +120,26 @@ module MoSQL
           end
           column col[:name], col[:type], opts
 
-              if composite_key and composite_key.include?(col[:name])
-                keys << col[:name].to_sym
-              elsif not composite_key and col[:source].to_sym == :_id
-                keys << col[:name].to_sym
-              end
-            end
+          if composite_key and composite_key.include?(col[:name])
+            keys << col[:name].to_sym
+          elsif not composite_key and col[:source].to_sym == :_id
+            keys << col[:name].to_sym
+          end
+        end
 
-            primary_key keys
-            if meta[:extra_props]
-              type =
-                case meta[:extra_props]
-                when 'JSON'
-                  'JSON'
-                when 'JSONB'
-                  'JSONB'
-                else
-                  'TEXT'
-                end
-              column '_extra_props', type
+        primary_key keys
+        if meta[:extra_props]
+          type =
+            case meta[:extra_props]
+            when 'JSON'
+              'JSON'
+            when 'JSONB'
+              'JSONB'
+            else
+              'TEXT'
             end
+          column '_extra_props', type
+        end
       end
     end
 
@@ -142,7 +149,6 @@ module MoSQL
           next unless n.is_a?(String)
           create_schema_for_collection(db, collection, clobber)
           create_schema_for_related_tables(db, collection[:related], clobber)
-
         end
       end
     end
@@ -274,28 +280,32 @@ module MoSQL
       row = []
       schema[:columns].each do |col|
 
-        source = col[:source]
-        type = col[:type]
+        if col[:value]
+          v = col[:value]
+        else
+          source = col[:source]
+          type = col[:type]
 
-        if source.start_with?("$")
-          v = fetch_special_source(obj, source, original)
-        else
-          v = fetch_and_delete_dotted(obj, source)
-        end
-        case v
-        when Hash
-          v = JSON.dump(Hash[v.map { |k,v| [k, transform_primitive(v)] }])
-        when ChildrenArray
-          #noop
-        when Array
-          v = v.map { |it| transform_primitive(it) }
-          if col[:array_type]
-            v = Sequel.pg_array(v, col[:array_type])
+          if source.start_with?("$")
+            v = fetch_special_source(obj, source, original)
           else
-            v = JSON.dump(v)
+            v = fetch_and_delete_dotted(obj, source)
           end
-        else
-          v = transform_primitive(v, type)
+          case v
+          when Hash
+            v = JSON.dump(Hash[v.map { |k,v| [k, transform_primitive(v)] }])
+          when ChildrenArray
+            #noop
+          when Array
+            v = v.map { |it| transform_primitive(it) }
+            if col[:array_type]
+              v = Sequel.pg_array(v, col[:array_type])
+            else
+              v = JSON.dump(v)
+            end
+          else
+            v = transform_primitive(v, type)
+          end
         end
         row << v
       end
