@@ -295,7 +295,18 @@ module MoSQL
           when Hash
             v = JSON.dump(Hash[v.map { |k,v| [k, transform_primitive(v)] }])
           when ChildrenArray
-            #noop
+            if Array === v
+              v.map! do |k|
+                case k
+                when Hash
+                  Hash[k.map { |m,l| [m, transform_primitive(l)] }]
+                when Array
+                  Sequel.pg_array(k.map { |it| JSON.dump(it) }, col[:array_type])
+                else
+                  transform_primitive(k)
+                end
+              end
+            end
           when Array
             v = v.map { |it| transform_primitive(it) }
             if col[:array_type]
@@ -322,8 +333,8 @@ module MoSQL
 
     def unfold_rows(row)
       # Convert row [a, [b, c], d] into [[a, b, d], [a, c, d]]
-      depth = row.select {|r| r.is_a? Array}.map {|r| [r].flatten.length }.max || 0
-      row.map! {|r| [r].flatten.cycle.take(depth)}
+      depth = row.select {|r| r.is_a? Array}.map {|r| r.length }.max || 0
+      row.map! {|r| [r].flatten(1).cycle.take(depth)}
       row.first.zip(*row.drop(1))
     end
 
