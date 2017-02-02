@@ -9,6 +9,7 @@ class MoSQL::Test::Functional::SQLTest < MoSQL::Test::Functional
       column :quantity, 'INTEGER'
       column :numbers, 'INTEGER ARRAY'
       column :json_arrray, 'TEXT ARRAY'
+      column :default, 'TEXT', default: 'default_val'
       primary_key [:_id]
     end
 
@@ -27,6 +28,7 @@ class MoSQL::Test::Functional::SQLTest < MoSQL::Test::Functional
       assert_equal(5,      @table[:_id => 1][:quantity])
       assert_equal([1, 2, 3], @table[:_id => 0][:numbers])
       assert_equal(["{\"a\":1}", "{\"a\":2}"], @table[:_id => 0][:json_arrray])
+      assert_equal('default_val', @table[:_id => 0][:default])
       assert_equal([], @table[:_id => 1][:numbers])
     end
 

@@ -114,7 +114,7 @@ module MoSQL
       log.info("Creating table '#{meta[:table]}'...")
       db.send(clobber ? :create_table! : :create_table?, meta[:table]) do
         collection[:columns].each do |col|
-          opts = {}
+          opts = col[:default] || {}
           if col[:source] == '$timestamp'
             opts[:default] = Sequel.function(:now)
           end
