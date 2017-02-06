@@ -34,13 +34,13 @@ module MoSQL
       @mongo.db(dbname).collection(collection)
     end
 
-    def unsafe_handle_exceptions(ns, obj)
+    def unsafe_handle_exceptions(ns, obj, item = nil)
       begin
         yield
-      rescue Sequel::DatabaseError => e
+      rescue Exception => e
         wrapped = e.wrapped_exception
         if wrapped.result && options[:unsafe]
-          log.warn("Ignoring row (#{obj.inspect}): #{e}")
+          log.warn("Ignoring row (#{obj.inspect}) (ITEM - #{item}): #{e}")
         else
           log.error("Error processing #{obj.inspect} for #{ns}.")
           raise e
@@ -52,12 +52,13 @@ module MoSQL
       begin
         @schema.copy_data(table.db, ns, items)
       rescue Sequel::DatabaseError => e
-        log.debug("Bulk insert error (#{e}), attempting invidual upserts...")
+        log.debug("(#{items}), attempting invidual upserts...")
+        log.debug("Bulk insert error (#{e}, #{table} #{items}), attempting invidual upserts...")
         cols = @schema.all_columns(@schema.find_ns(ns))
-        items.each do |it|
+        items.each do |item|
           h = {}
-          cols.zip(it).each { |k,v| h[k] = v }
-          unsafe_handle_exceptions(ns, h) do
+          cols.zip(item).each { |k,v| h[k] = v }
+          unsafe_handle_exceptions(ns, h, item) do
             @sql.upsert!(table, @schema.primary_sql_key_for_ns(ns), h)
           end
         end
