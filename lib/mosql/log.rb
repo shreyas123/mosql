@@ -1,7 +1,7 @@
 module MoSQL
   module Logging
     def log
-      @@logger ||=
+      @@logger ||= generate_log
     end
 
     def generate_log
