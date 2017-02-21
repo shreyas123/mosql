@@ -39,7 +39,7 @@ module MoSQL
         yield
       rescue Exception => e
         wrapped = e.wrapped_exception
-        if wrapped.result && options[:unsafe]
+        if wrapped && options[:unsafe]
           log.warn("Ignoring row (#{obj.inspect}) (ITEM - #{item}): #{e}")
         else
           log.error("Error processing #{obj.inspect} for #{ns}.")
