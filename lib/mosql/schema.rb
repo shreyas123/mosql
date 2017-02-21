@@ -428,7 +428,12 @@ module MoSQL
       when Sequel::SQL::Blob
         "\\\\x" + [val].pack("h*")
       else
-        val.to_s.gsub(/([\\\t\n\r])/, '\\\\\\1')
+        begin
+          val.to_s.gsub(/([\\\t\n\r])/, '\\\\\\1')
+        rescue
+          log.warn("ERROR VAL ------------- #{val}")
+          return ''
+        end
       end
     end
 
