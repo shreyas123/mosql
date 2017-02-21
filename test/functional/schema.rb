@@ -11,6 +11,7 @@ db:
       - _id: TEXT
       - var: INTEGER
       - arry: INTEGER ARRAY
+      - jsonbarr: JSONB ARRAY
   with_extra_props:
     :meta:
       :table: sqltable2
@@ -45,7 +46,7 @@ EOF
   def table3; @sequel[:sqltable3]; end
 
   it 'Creates the tables with the right columns' do
-    assert_equal(Set.new([:_id, :var, :arry]),
+    assert_equal(Set.new([:_id, :var, :arry, :jsonbarr]),
                  Set.new(table.columns))
     assert_equal(Set.new([:_id, :_extra_props]),
                  Set.new(table2.columns))
@@ -102,6 +103,15 @@ EOF
     row = @map.transform('db.collection', o)
     table.insert(row)
     assert_equal(o['_id'].to_s, table.select.first[:_id])
+  end
+
+  it 'Can transform DEEP BSON::ObjectIDs' do
+    bson_obj = BSON::ObjectId.new
+    deep_obj = BSON::ObjectId.new
+    o = {'_id' => BSON::ObjectId.new, 'var' => 0, 'jsonbarr' => [{ id: bson_obj, deep: [id: deep_obj] }]}
+    row = @map.transform('db.collection', o)
+    table.insert(row)
+    assert_equal([{"id" => bson_obj.to_s, "deep" => ["id" => deep_obj.to_s]}], table.select.first[:jsonbarr])
   end
 
   describe "related fields" do

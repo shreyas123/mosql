@@ -17,7 +17,7 @@ module MoSQL
     def connect_sql
       begin
         conn = Sequel.connect(sql_test_uri)
-        conn.extension :pg_array
+        conn.extension :pg_array, :pg_json
         conn.test_connection
         conn
       rescue Sequel::DatabaseConnectionError

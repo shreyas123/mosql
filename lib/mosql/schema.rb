@@ -270,6 +270,8 @@ module MoSQL
         v.object_id.to_s
       when Hash
         Hash[v.map { |m,l| [m, sanitize(transform_primitive(l))] }]
+      when Array
+        v.map { |l| sanitize(transform_primitive(l)) }
       else
         v
       end
