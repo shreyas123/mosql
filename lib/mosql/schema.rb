@@ -268,6 +268,8 @@ module MoSQL
         end
       when BSON::DBRef
         v.object_id.to_s
+      when Hash
+        Hash[v.map { |m,l| [m, sanitize(transform_primitive(l))] }]
       else
         v
       end
@@ -328,6 +330,9 @@ module MoSQL
           when Array
             v = v.map { |it| transform_primitive(it) }
             if col[:array_type]
+              if col[:array_type] == 'JSONB'
+                v = v.map { |it| Sequel.pg_json(it) }
+              end
               v = Sequel.pg_array(v, col[:array_type])
             else
               v = JSON.dump(v)
