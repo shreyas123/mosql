@@ -8,27 +8,30 @@ module MoSQL
       lst.map do |ent|
         col = nil
         if ent.is_a?(Hash) && ent[:value].is_a?(String) && ent[:type].is_a?(String)
-          # new configuration format
           col = {
             :source => '',
             :name   => ent.first.first,
             :value => ent.fetch(:value),
-            :type   => ent.fetch(:type)
+            :type   => ent.fetch(:type),
+            :default => ent.fetch(:default, nil),
+            :default_function => ent.fetch(:default_function, false)
           }
         elsif ent.is_a?(Hash) && ent[:source].is_a?(String) && ent[:type].is_a?(String)
-          # new configuration format
           col = {
             :source => ent.fetch(:source),
             :type   => ent.fetch(:type),
             :name   => (ent.keys - [:source, :type]).first,
-            :primary_key => ent.fetch(:primary_key, false)
+            :primary_key => ent.fetch(:primary_key, false),
+            :default => ent.fetch(:default, nil),
+            :default_function => ent.fetch(:default_function, false)
           }
-        elsif ent.is_a?(Hash) && ent.keys.length == 1 && ent.values.first.is_a?(String)
+        elsif ent.is_a?(Hash) && ((ent.keys.length == 1 && ent.values.first.is_a?(String)) || (ent.keys.include?(:default) || ent.keys.include?(:default_function)))
           col = {
             :source => ent.first.first,
             :name   => ent.first.first,
             :type   => ent.first.last,
-            :primary_key => ent.fetch(:primary_key, false)
+            :default => ent.fetch(:default, nil),
+            :default_function => ent.fetch(:default_function, false)
           }
         else
           raise SchemaError.new("Invalid ordered hash entry #{ent.inspect}")
@@ -114,9 +117,16 @@ module MoSQL
       log.info("Creating table '#{meta[:table]}'...")
       db.send(clobber ? :create_table! : :create_table?, meta[:table]) do
         collection[:columns].each do |col|
-          opts = col[:default] || {}
+          opts = {}
+          if !col[:default].nil?
+            opts[:default] = col[:default]
+          end
+
           if col[:source] == '$timestamp'
             opts[:default] = Sequel.function(:now)
+          end
+          if col[:default_function]
+            opts[:default] = Sequel.function(col[:default_function])
           end
           column col[:name], col[:type], opts
 
@@ -280,6 +290,13 @@ module MoSQL
       row = []
       schema[:columns].each do |col|
 
+        if col[:default]
+          v = col[:default]
+        elsif col[:default_function]
+          v = Sequel.function(col[:default_function].to_sym)
+        end
+
+
         if col[:value]
           v = col[:value]
         else
@@ -291,6 +308,7 @@ module MoSQL
           else
             v = fetch_and_delete_dotted(obj, source)
           end
+
           case v
           when Hash
             v = JSON.dump(Hash[v.map { |k,v| [k, transform_primitive(v)] }])
