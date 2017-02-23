@@ -155,30 +155,30 @@
       :default: false
     - onboarded: boolean
       :default: false
-    - completed_exercises: jsonb
+    - completed_exercises: JSONB
       :default: "[]"
-    - diet_exclusions: jsonb
+    - diet_exclusions: JSONB
       :default: '["soy"]'
-    - experiments: jsonb
+    - experiments: JSONB
       :default: "{}"
-    - favorite_recipe_ids: jsonb
+    - favorite_recipe_ids: JSONB
       :default: "[]"
-    - fb_data: jsonb
-    - fb_friend_ids: jsonb
+    - fb_data: JSONB
+    - fb_friend_ids: JSONB
       :default: "[]"
-    - fb_friends_raw: jsonb
-    - install_ids: jsonb
+    - fb_friends_raw: JSONB
+    - install_ids: JSONB
       :default: "[]"
-    - last_strength_test: jsonb
-    - location: jsonb
+    - last_strength_test: JSONB
+    - location: JSONB
       :default: "{}"
-    - meal_categories: jsonb
+    - meal_categories: JSONB
       :default: "[]"
-    - tag_ids: jsonb
+    - tag_ids: JSONB
       :default: "[]"
     - food_dislikes: TEXT ARRAY
       :default: '[]'
-    - interests: jsonb
+    - interests: JSONB
     - effort_level: varchar
     - utm_source: TEXT
     - time_zone: TEXT
@@ -305,8 +305,8 @@
       :default: 0
     - sugar: FLOAT
       :default: 0
-    - quantity: INTEGER
-    - quantity_in_grams: FLOAT
+    - quantity: FLOAT
+    - quantity_in_grams: INTEGER
     - sodium: FLOAT
       :default: 0
     - state: TEXT
@@ -371,7 +371,7 @@
     - background_fingerprint: TEXT
     - background_updated_at: timestamp without time zone
     - created_at: timestamp without time zone
-    - description: JSON
+    - description: JSONB
     - family: TEXT
     - gender: TEXT
     - icon_content_type: TEXT
@@ -382,9 +382,9 @@
     - identifier: TEXT
     - is_pro: BOOLEAN
       :default: true
-    - lead: JSON
+    - lead: JSONB
     - level: INTEGER
-    - name: JSON
+    - name: JSONB
     - phase: INTEGER
       :default: 0
     - title_en_content_type: TEXT
@@ -1157,8 +1157,8 @@
     - difficulty: TEXT
     - delight: TEXT
     - comments: TEXT
-    - data: JSON
-    - feedback: JSON
+    - data: JSONB
+    - feedback: JSONB
     - share_image: TEXT
     - sets:
       :source: sets
@@ -1191,8 +1191,8 @@
     #       :type: INTEGER
     #     - steps:
     #       :source: sets[].steps
-    #       :type: JSON ARRAY
-    #       :array_type: JSON
+    #       :type: JSONB ARRAY
+    #       :array_type: JSONB
     #   :workout_step_completeds:
     #     - id:
     #       :source: completed_steps[]._id
