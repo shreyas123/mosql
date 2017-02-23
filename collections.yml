@@ -1,0 +1,1230 @@
+8fit_production:
+  users:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - action_running: TEXT
+    - actions: JSONB
+      :default: "[]"
+    - agent_autoresponded_at: timestamp without time zone
+    - agent_id: TEXT
+    - agent_rating: TEXT
+    - app_rating_comment: TEXT
+    - authentication_token: TEXT
+    - autodetected_timezone: TEXT
+      :default: Europe/Berlin
+    - constitution: TEXT
+      :default: average
+    - country: TEXT
+    - country_code: TEXT
+    - currency: TEXT
+    - current_sign_in_ip: TEXT
+    - email: TEXT
+      :default: ""
+    - encrypted_password: TEXT
+      :default: ""
+    - fb_pic: TEXT
+    - fb_token: TEXT
+    - first_day: TEXT
+      :default: monday
+    - gender: TEXT
+    - goal: TEXT
+    - idfa: TEXT
+    - ip: TEXT
+    - last_app_version: TEXT
+    - last_app_version_rated: TEXT
+    - last_client_native_version: TEXT
+    - last_client_platform: TEXT
+    - last_client_version: TEXT
+    - last_cta_clicked: TEXT
+    - last_message_excerpt: TEXT
+      :default: ""
+    - last_sign_in_ip: TEXT
+    - locale: TEXT
+      :default: en
+    - name: TEXT
+      :default: ""
+    - name_translations: JSONB
+    - next_workout_reminder_jid: TEXT
+    - next_workout_reminder_type: TEXT
+      :default: push
+    - notes: TEXT
+      :default: ""
+    - preferred_timezone: TEXT
+    - profile_image: TEXT
+    - reset_password_token: TEXT
+    - stripe_customer_id: TEXT
+    - support_email: TEXT
+    - test_group: TEXT
+    - trainer_id: TEXT
+    - trainer_rating: TEXT
+    - units: TEXT
+      :default: metric
+    - utm_campaign: TEXT
+    - utm_medium: TEXT
+    - utm_term: TEXT
+    - activity_level: Integer
+      :default: 1
+    - app_rating: Integer
+    - completed_meals_count: Integer
+      :default: 0
+    - completed_workouts_count: Integer
+      :default: 0
+    - daily_step_goal: Integer
+    - devices_count: Integer
+      :default: 0
+    - fb_id: TEXT
+    - friends_count: Integer
+      :default: 0
+    - height_cm: Integer
+    - kcal_correction: Integer
+      :default: 0
+    - meals_cache_counter: Integer
+      :default: 0
+    - measures_count: Integer
+      :default: 0
+    - messages_count: Integer
+      :default: 0
+    - next_workout_reminder_repeated: Integer
+      :default: 0
+    - num_meals: Integer
+      :default: 4
+    - sent_messages_count: Integer
+      :default: 0
+    - sessions: Integer
+      :default: 0
+    - sign_in_count: Integer
+      :default: 0
+    - strength_assessment: Integer
+    - weekly_activity_goal_meals: Integer
+      :default: 5
+    - weekly_activity_goal_workouts: Integer
+      :default: 4
+    - weekly_variety_breakfast: Integer
+      :default: 4
+    - weekly_variety_dinner: Integer
+      :default: 4
+    - weekly_variety_lunch: Integer
+      :default: 4
+    - weekly_variety_snack: Integer
+      :default: 4
+    - weight_gr: Integer
+    - agent_wrote_at: timestamp without time zone
+    - birthday: timestamp without time zone
+    - cancelation_requested_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - current_sign_in_at: timestamp without time zone
+    - last_app_rating_at: timestamp without time zone
+    - last_app_rating_opened_store_at: timestamp without time zone
+    - last_app_update_at: timestamp without time zone
+    - last_client_built_at: timestamp without time zone
+    - last_client_updated_at: timestamp without time zone
+    - last_message_at: timestamp without time zone
+    - last_message_sent_at: timestamp without time zone
+    - last_seen_at: timestamp without time zone
+    - last_sign_in_at: timestamp without time zone
+    - last_workout_completed_at: timestamp without time zone
+    - meal_plan_starts_at: timestamp without time zone
+    - needs_agent_at: timestamp without time zone
+    - needs_trainer_at: timestamp without time zone
+    - next_workout_reminder_at: timestamp without time zone
+    - remember_created_at: timestamp without time zone
+    - reset_password_sent_at: timestamp without time zone
+    - trainer_wrote_at: timestamp without time zone
+    - updated_at: timestamp without time zone
+    - body_fat: real
+    - body_fat_target: real
+    - can_message_trainer: boolean
+      :default: false
+    - customerio_enqueued: boolean
+      :default: false
+    - disabled: boolean
+      :default: false
+    - has_cancelation_feedback: boolean
+      :default: false
+    - has_fake_email: boolean
+      :default: false
+    - interactive_sound: boolean
+      :default: true
+    - motivational_emails: boolean
+      :default: true
+    - needs_agent: boolean
+      :default: false
+    - needs_trainer: boolean
+      :default: false
+    - onboarded: boolean
+      :default: false
+    - completed_exercises: jsonb
+      :default: "[]"
+    - diet_exclusions: jsonb
+      :default: '["soy"]'
+    - experiments: jsonb
+      :default: "{}"
+    - favorite_recipe_ids: jsonb
+      :default: "[]"
+    - fb_data: jsonb
+    - fb_friend_ids: jsonb
+      :default: "[]"
+    - fb_friends_raw: jsonb
+    - install_ids: jsonb
+      :default: "[]"
+    - last_strength_test: jsonb
+    - location: jsonb
+      :default: "{}"
+    - meal_categories: jsonb
+      :default: "[]"
+    - tag_ids: jsonb
+      :default: "[]"
+    - food_dislikes: TEXT ARRAY
+      :default: '[]'
+    - interests: jsonb
+    - effort_level: varchar
+    - utm_source: TEXT
+    - time_zone: TEXT
+    - subscription_id:
+      :source: subscription._id
+      :type: TEXT
+    :related:
+      :integrations:
+        - id:
+          :source: integrations[].$id
+          :type: TEXT
+          :primary_key: true
+        - created_at:
+          :source: integrations[].created_at
+          :type: timestamp without time zone
+        - updated_at:
+          :source: integrations[].updated_at
+          :type: timestamp without time zone
+        - source:
+          :source: integrations[].source
+          :type: TEXT
+        - token:
+          :source: integrations[].token
+          :type: TEXT
+        - enabled:
+          :source: integrations[].enabled
+          :type: BOOLEAN
+        - user_id:
+          :source: _id
+          :type: TEXT
+      :recipe_users:
+        - recipe_id:
+          :source: favorite_recipe_ids[].$id
+          :type: TEXT
+        - user_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: users
+      :extra_props: true
+
+  roles:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - name: TEXT
+    - user_ids: TEXT ARRAY
+    :related:
+      :role_users:
+        - user_id:
+          :source: user_ids[].$id
+          :type: TEXT
+        - role_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: roles
+      :extra_props: true
+
+  foods:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - category: TEXT
+    - amount: INTEGER
+    - carbs: FLOAT
+      :default: 0
+    - countries: TEXT
+    - external_reference: TEXT
+      :default: ""
+    - fat: FLOAT
+      :default: 0
+    - fiber: FLOAT
+      :default: 0
+    - format_imperial: TEXT
+    - format_metric: TEXT
+    - has_added_sugar: BOOLEAN
+      :default: false
+    - has_beef: BOOLEAN
+      :default: fals
+    - has_dairy: BOOLEAN
+      :default: false
+    - has_egg: BOOLEAN
+      :default: false
+    - has_fish: BOOLEAN
+      :default: false
+    - has_fruit: BOOLEAN
+      :default: false
+    - has_gluten: BOOLEAN
+      :default: false
+    - has_grains: BOOLEAN
+      :default: false
+    - has_lamb: BOOLEAN
+      :default: false
+    - has_legumes: BOOLEAN
+      :default: false
+    - has_meat: BOOLEAN
+    - has_nuts: BOOLEAN
+      :default: false
+    - has_pork: BOOLEAN
+      :default: false
+    - has_potato: BOOLEAN
+      :default: false
+    - has_poultry: BOOLEAN
+      :default: false
+    - has_red_meat: BOOLEAN
+      :default: false
+    - has_shellfish: BOOLEAN
+      :default: false
+    - has_soy: BOOLEAN
+      :default: false
+    - has_wheat: BOOLEAN
+    - is_breakfasty: BOOLEAN
+    - is_snacky: BOOLEAN
+    - measurement_type: TEXT
+    - level: INTEGER
+    - name: JSONB
+      :default: "{}"
+    - notes: TEXT
+    - popularity: INTEGER
+    - protein: FLOAT
+      :default: 0
+    - sugar: FLOAT
+      :default: 0
+    - quantity: INTEGER
+    - quantity_in_grams: FLOAT
+    - sodium: FLOAT
+      :default: 0
+    - state: TEXT
+    - subtype: TEXT
+    - canonical: TEXT
+    - units: TEXT
+    - updater_id: TEXT
+    - creator_id: TEXT
+    - version: INTEGER
+    :meta:
+      :table: foods
+      :extra_props: true
+
+  charges:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - raw: JSONB
+      :default: "{}"
+    - external_id: TEXT
+    - backend: TEXT
+    - status: TEXT
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - external_customer_id: TEXT
+    - external_subscription_id: TEXT
+    - subscription_plan: TEXT
+    - period_start_at: TIMESTAMP
+    - period_end_at: TIMESTAMP
+    - net_revenue_usd: FLOAT
+    - gross_value_usd: FLOAT
+    - customer_transaction_currency: TEXT
+    - customer_transaction_value: FLOAT
+    :meta:
+      :table: charges
+      :extra_props: true
+  course_applications:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - course_id: INTEGER
+    - introduction: TEXT
+    - goals: TEXT
+    - user_id: TEXT
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    :meta:
+      :table: course_applications
+      :extra_props: true
+
+  cycles:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - active: BOOLEAN
+    - background_content_type: TEXT
+    - background_file_name: TEXT
+    - background_file_size: INTEGER
+    - background_fingerprint: TEXT
+    - background_updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - description: JSON
+    - family: TEXT
+    - gender: TEXT
+    - icon_content_type: TEXT
+    - icon_file_name: TEXT
+    - icon_file_size: INTEGER
+    - icon_fingerprint: TEXT
+    - icon_updated_at: timestamp without time zone
+    - identifier: TEXT
+    - is_pro: BOOLEAN
+      :default: true
+    - lead: JSON
+    - level: INTEGER
+    - name: JSON
+    - phase: INTEGER
+      :default: 0
+    - title_en_content_type: TEXT
+    - title_en_file_name: TEXT
+    - title_en_file_size: INTEGER
+    - title_en_fingerprint: TEXT
+    - title_en_updated_at: timestamp without time zone
+    - title_es_content_type: TEXT
+    - title_es_file_name: TEXT
+    - title_es_file_size: INTEGER
+    - title_es_fingerprint: TEXT
+    - title_es_updated_at: timestamp without time zone
+    - updated_at: timestamp without time zone
+    - workout_template_ids: TEXT ARRAY
+    - updater_id: TEXT
+    - creator_id: TEXT
+    - background_blur_file_name: TEXT
+    - background_blur_content_type: TEXT
+    - background_blur_file_size: INTEGER
+    - background_blur_fingerprint: TEXT
+    - background_blur_updated_at: timestamp without time zone
+    - version: INTEGER
+    - modifier_id: TEXT
+    :related:
+      :cycle_workout_templates:
+        - workout_template_id:
+          :source: workout_template_ids[].$id
+          :type: TEXT
+        - cycle_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: cycles
+      :extra_props: true
+
+  devices:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - app_id: TEXT
+    - created_at: timestamp without time zone
+    - token: TEXT
+    - updated_at: timestamp without time zone
+    - user_id: TEXT
+    :meta:
+      :table: devices
+      :extra_props: true
+
+  equipment:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - name: JSONB
+    - exercise_ids: TEXT ARRAY
+    - updater_id: TEXT
+    - creator_id: TEXT
+    - version: INTEGER
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - image_content_type: TEXT
+    - image_file_name: TEXT
+    - image_file_size: INTEGER
+    - image_fingerprint: TEXT
+    - image_updated_at: timestamp without time zone
+    :related:
+      :equipment_exercises:
+        - exercise_id:
+          :source: exercise_ids[].$id
+          :type: TEXT
+        - equipment_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: equipment
+      :extra_props: true
+
+  exercises:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - version: INTEGER
+    - description: JSONB
+    - category: TEXT
+    - enabled: BOOLEAN
+      :default: false
+    - family: INTEGER
+    - identifier: INTEGER
+    - image_male_content_type: TEXT
+    - image_male_file_name: TEXT
+    - image_male_file_size: INTEGER
+    - image_male_fingerprint: TEXT
+    - image_male_updated_at: timestamp without time zone
+    - image_female_content_type: TEXT
+    - image_female_file_name: TEXT
+    - image_female_file_size: INTEGER
+    - image_female_fingerprint: TEXT
+    - image_female_updated_at: timestamp without time zone
+    - mh_id: INTEGER
+    - muscle_group: TEXT
+    - name: JSONB
+    - notes: JSONB
+    - seconds: FLOAT
+      :default: 1
+    - track_distance: BOOLEAN
+      :default: false
+    - variation: JSONB
+    - video_male_content_type: TEXT
+    - video_male_file_name: TEXT
+    - video_male_file_size: INTEGER
+    - video_male_fingerprint: TEXT
+    - video_male_updated_at: timestamp without time zone
+    - video_female_content_type: TEXT
+    - video_female_file_name: TEXT
+    - video_female_file_size: INTEGER
+    - video_female_fingerprint: TEXT
+    - video_female_updated_at: timestamp without time zone
+    - search_string: TEXT
+    - easier_alternative_id: TEXT
+    - harder_alternative_id: TEXT
+    - no_equipment_alternative_id: TEXT
+    - equipment_ids: TEXT ARRAY
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - creator_id: TEXT
+    - updater_id: TEXT
+    - kcal_hour: INTEGER
+    - subcategory: TEXT
+    - body: TEXT
+    :meta:
+      :table: exercises
+      :extra_props: true
+
+  installs:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - created_at: timestamp without time zone
+    - data: JSONB
+      :default: "{}"
+    - idfa: TEXT
+    - updated_at: timestamp without time zone
+    - attribution_provider: TEXT
+      :default: ""
+    - reattribution: BOOLEAN
+      :default: false
+    - invited_by_id: TEXT
+    :related:
+      :install_users:
+        - user_id:
+          :source: user_ids[].$id
+          :type: TEXT
+        - install_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: installs
+      :extra_props: true
+
+  invites:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - invite_type: TEXT
+    - email: TEXT
+    - accepted: BOOLEAN
+      :default: "false"
+    - user_id: TEXT
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    :meta:
+      :table: invites
+      :extra_props: true
+
+  meal_plan_snapshots:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - start_date: DATE
+    - end_date: DATE
+    - user_id: TEXT
+    - meals: JSONB
+    - weekly_variety_breakfast: INTEGER
+    - weekly_variety_lunch: INTEGER
+    - weekly_variety_dinner: INTEGER
+    - weekly_variety_snack: INTEGER
+    - diet_exclusions: JSONB
+      :default: '["soy"]'
+    - meal_categories: TEXT ARRAY
+    - num_meals: INTEGER
+      :default: 4
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - food_dislikes: TEXT ARRAY
+      :default: '[]'
+    :meta:
+      :table: meal_plan_snapshots
+      :extra_props: true
+
+  meals:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - user_id: TEXT
+    - date: DATE
+    - meal_block_id: TEXT
+    - target_kcal: INTEGER
+    - replaced: BOOLEAN
+      :default: false
+    - user_logged: BOOLEAN
+      :default: false
+    - image_identifier: TEXT
+    - name: TEXT
+    - image_file_name: TEXT
+    - image_content_type: TEXT
+    - image_file_size: INTEGER
+    - image_updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - image_fingerprint: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - status: TEXT
+    - portion_size: TEXT
+    - portion_quality: TEXT
+    - type: TEXT
+    :meta:
+      :table: meals
+      :extra_props: true
+
+  measures:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - value: INTEGER
+      :default: 0
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - type: TEXT
+    - user_id: TEXT
+    :meta:
+      :table: measures
+      :extra_props: true
+
+  message_templates:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - used_count: INTEGER
+      :default: 0
+    - content: JSONB
+    - name: TEXT
+      :default: ""
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - type: TEXT
+    :meta:
+      :table: message_templates
+      :extra_props: true
+
+  messages:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - user_id: TEXT
+    - sender_id: TEXT
+    - body: TEXT
+      :default: ""
+    - metadata: JSONB
+      :default: "{}"
+    - random_id: TEXT
+      :default: ""
+    - read: BOOLEAN
+      :default: "false"
+    - type: TEXT
+      :default: trainer
+    - message_template_id: TEXT
+    - workout_template_id: TEXT
+    - exercise_id: TEXT
+    - recipe_id: TEXT
+    - cycle_id: TEXT
+    - rating: TEXT
+    :meta:
+      :table: messages
+      :extra_props: true
+
+  plans:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - identifier: TEXT
+    - external_identifier:  TEXT
+    - enabled: BOOLEAN
+      :default: false
+    - period: INTEGER
+    - trial_period_days: INTEGER
+      :default: 0
+    - can_message_trainer: BOOLEAN
+      :default: false
+    - approx_initial_revenue: INTEGER
+      :default: 0
+    - approx_initial_net_revenue: INTEGER
+      :default: 0
+    - device_currency: TEXT
+    - device_currency_symbol: TEXT
+    - device_amount: INTEGER
+    - device_amount_display: TEXT
+    - device_discount_display: TEXT
+    - device_available: BOOLEAN
+      :default: false
+    - allows_7d_refund: BOOLEAN
+      :default: true
+    - meals_delivery: TEXT
+    - period_name: TEXT
+    - backend: TEXT
+    :meta:
+      :table: plans
+      :extra_props: true
+
+  recipes:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - creator_id: TEXT
+    - updater_id: TEXT
+    - version: INTEGER
+    - name: TEXT
+      :default: ""
+    - status: TEXT
+      :default: ""
+    - notes: TEXT
+      :default: ""
+    - ef_id: INTEGER
+    - image_file_name: TEXT
+    - image_content_type: TEXT
+    - image_file_size: INTEGER
+    - image_updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - image_fingerprint: TEXT
+    - type: TEXT
+    - instructions: JSONB
+      :default: "{}"
+    - has_red_meat: BOOLEAN
+      :default: false
+    - has_beef: BOOLEAN
+      :default: false
+    - has_pork: BOOLEAN
+      :default: false
+    - has_lamb: BOOLEAN
+      :default: false
+    - has_poultry: BOOLEAN
+      :default: false
+    - has_fish: BOOLEAN
+      :default: false
+    - has_shellfish: BOOLEAN
+      :default: false
+    - has_dairy: BOOLEAN
+      :default: false
+    - has_soy: BOOLEAN
+      :default: false
+    - has_egg: BOOLEAN
+      :default: false
+    - has_grains: BOOLEAN
+      :default: false
+    - has_added_sugar: BOOLEAN
+      :default: false
+    - has_nuts: BOOLEAN
+      :default: false
+    - has_gluten: BOOLEAN
+      :default: false
+    - has_fruit: BOOLEAN
+      :default: false
+    - has_potato: BOOLEAN
+      :default: false
+    - has_legumes: BOOLEAN
+      :default: false
+    - valid_200: BOOLEAN
+      :default: false
+    - kcal_200: INTEGER
+      :default: 0
+    - valid_300: BOOLEAN
+      :default: false
+    - kcal_300: INTEGER
+      :default: 0
+    - valid_400: BOOLEAN
+      :default: false
+    - kcal_400: INTEGER
+      :default: 0
+    - valid_500: BOOLEAN
+      :default: false
+    - kcal_500: INTEGER
+      :default: 0
+    - valid_600: BOOLEAN
+      :default: false
+    - kcal_600: INTEGER
+      :default: 0
+    - valid_700: BOOLEAN
+      :default: false
+    - kcal_700: INTEGER
+      :default: 0
+    - valid_800: BOOLEAN
+      :default: false
+    - kcal_800: INTEGER
+      :default: 0
+    - valid_900: BOOLEAN
+      :default: false
+    - kcal_900: INTEGER
+      :default: 0
+    - author: TEXT
+    - source_url: TEXT
+    - prep_time: INTEGER
+      :default: 0
+    - active: BOOLEAN
+      :default: false
+      :default: false
+    - meal_categories: TEXT ARRAY
+    - view_count: INTEGER
+      :default: 0
+    - done_count: INTEGER
+      :default: 0
+    - skip_count: INTEGER
+      :default: 0
+    - chosen_count: INTEGER
+      :default: 0
+    - changed_count:  INTEGER
+      :default: 0
+    - diet_type: TEXT
+    - num_block: FLOAT
+    - contains: TEXT ARRAY
+      :default: '{}'
+    :related:
+      :meal_block_ingredients:
+        - id:
+          :source: ingredients[]._id
+          :type: TEXT
+          :primary_key: true
+        - recipe_id:
+          :source: _id
+          :type: TEXT
+        - food_block_id:
+          :source: ingredients[].food_block_id
+          :type: TEXT
+        - replacement_id:
+          :source: ingredients[].replacement_id
+          :type: TEXT
+        - num_blocks:
+          :source: ingredients[].num_blocks
+          :type: FLOAT
+          :default: 1
+        - num_blocks_200:
+          :source: ingredients[].num_blocks_200
+          :type: FLOAT
+          :default: 0
+        - num_blocks_300:
+          :source: ingredients[].num_blocks_300
+          :type: FLOAT
+          :default: 0
+        - num_blocks_400:
+          :source: ingredients[].num_blocks_400
+          :type: FLOAT
+          :default: 0
+        - num_blocks_500:
+          :source: ingredients[].num_blocks_500
+          :type: FLOAT
+        - num_blocks_600:
+          :source: ingredients[].num_blocks_600
+          :type: FLOAT
+          :default: 0
+        - num_blocks_700:
+          :source: ingredients[].num_blocks_700
+          :type: FLOAT
+          :default: 0
+        - num_blocks_800:
+          :source: ingredients[].num_blocks_800
+          :type: FLOAT
+          :default: 0
+        - num_blocks_900:
+          :source: ingredients[].num_blocks_900
+          :type: FLOAT
+          :default: 0
+        - required:
+          :source: ingredients[].required
+          :type: BOOLEAN
+          :default: true
+    :meta:
+      :table: recipes
+      :extra_props: true
+
+  shopping_lists:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - start_date: DATE
+    - end_date: DATE
+    - meal_ids: TEXT ARRAY
+      :default: []
+    - user_id: TEXT
+    - meal_plan_snapshot_id: TEXT
+    :meta:
+      :table: shopping_lists
+      :extra_props: true
+
+  step_logs:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - start_at: TIMESTAMP WITHOUT TIME ZONE
+    - distance_meters: FLOAT
+      :default: 0
+    - steps: INTEGER
+      :default: 0
+    - user_id: TEXT
+    :meta:
+      :table: step_logs
+      :extra_props: true
+
+  subscriptions:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - creator_id: TEXT
+    - updater_id: TEXT
+    - version: INTEGER
+    - user_id_latest: TEXT
+    - user_id: TEXT
+    - external_id: TEXT
+    - transaction_idfa: TEXT
+    - started_at: TIMESTAMP WITHOUT TIME ZONE
+    - ends_at: TIMESTAMP WITHOUT TIME ZONE
+    - canceled_at: TIMESTAMP WITHOUT TIME ZONE
+    - plan: TEXT
+    - external_plan_id: TEXT
+    - coupon: TEXT
+    - status: TEXT
+    - card: JSONB
+      :default: "{}"
+    - external_customer_id: TEXT
+    - iap_receipt: TEXT
+    - latest_receipt: JSONB
+    - is_trialing: BOOLEAN
+      :default: false
+    - total_revenue: INTEGER
+      :default: 0
+    - first_time_net_revenue: INTEGER
+      :default: 0
+    - first_time_gross_revenue: INTEGER
+      :default: 0
+    - cta: TEXT
+    - transaction_platform: TEXT
+    - transaction_metadata: JSONB
+    - extended_period: INTEGER
+      :default: 0
+    - modifier_id: TEXT
+    - backend: TEXT
+    :meta:
+      :table: subscriptions
+      :extra_props: true
+
+  tags:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - name: TEXT
+    :related:
+      :tag_users:
+        - user_id:
+          :source: user_ids[].$id
+          :type: TEXT
+        - tag_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: tags
+      :extra_props: true
+
+  user_cycles:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - cycle_id: TEXT
+    - user_id: TEXT
+    - progress: INTEGER
+      :default: 0
+    - progress_target: INTEGER
+      :default: 0
+    - reason_joined: TEXT
+    - archived_at: TIMESTAMP WITHOUT TIME ZONE
+    - status: TEXT
+    :meta:
+      :table: user_cycles
+      :extra_props: true
+
+  warmups:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - name: TEXT
+    - identifier: INTEGER
+    - level: INTEGER
+    - video_female_file_name: TEXT
+    - video_female_content_type: TEXT
+    - video_female_file_size: INTEGER
+    - video_female_updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - video_female_fingerprint: TEXT
+    - video_female_seconds: INTEGER
+    - video_male_file_name: TEXT
+    - video_male_content_type: TEXT
+    - video_male_file_size: INTEGER
+    - video_male_updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - video_male_fingerprint: TEXT
+    - video_male_seconds: INTEGER
+    - type: TEXT
+    - steps:
+      :source: steps
+      :type: JSONB ARRAY
+      :default: "{}"
+    # :related:
+    #   :workout_steps:
+    #     - id:
+    #       :source: steps[]._id
+    #       :type: TEXT
+    #       :primary_key: true
+    #     - subjekt_type:
+    #       :value: 'Warmup'
+    #       :type: TEXT
+    #     - subjekt_id:
+    #       :source: _id
+    #       :type: TEXT
+    #     - exercise_id:
+    #       :source: steps[].exercise_id
+    #       :type: TEXT
+    #     - notes:
+    #       :source: steps[].notes
+    #       :type: TEXT
+    #     - time:
+    #       :source: steps[].time
+    #       :type: TEXT
+    #     - reps:
+    #       :source: steps[].reps
+    #       :type: TEXT
+    :meta:
+      :table: warmups
+      :extra_props: true
+
+  workout_templates:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - name: TEXT
+      :default: ""
+    - notes: TEXT
+      :default: ""
+    - skipped: BOOLEAN
+      :default: false
+    - session_type: TEXT
+    - skill: TEXT
+    - experience: INTEGER
+      :default: 150
+    - muscle_groups: TEXT ARRAY
+      :default: '{:full_body}'
+    - time_estimate_minutes: INTEGER
+      :default: 0
+    - kcal_per_minute_estimate: INTEGER
+      :default: 21
+    - creator_id: TEXT
+    - updater_id: TEXT
+    - version: INTEGER
+    - sets:
+      :source: sets
+      :type: JSONB ARRAY
+      :default: "{}"
+    # :related:
+    #   :workout_sets:
+    #     - id:
+    #       :source: sets[]._id
+    #       :type: TEXT
+    #       :primary_key: true
+    #     - subjekt_type:
+    #       :value: 'WorkoutTemplate'
+    #       :type: TEXT
+    #     - subjekt_id:
+    #       :source: _id
+    #       :type: TEXT
+    #     - name:
+    #       :source: sets[].name
+    #       :type: TEXT
+    #     - notes:
+    #       :source: sets[].notes
+    #       :type: TEXT
+    #     - time:
+    #       :source: sets[].time
+    #       :type: INTEGER
+    #     - steps:
+    #       :source: sets[].steps
+    #       :type: JSONB ARRAY
+    #       :array_type: JSONB
+    :meta:
+      :table: workout_templates
+      :extra_props: true
+
+  workouts:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - name: TEXT
+      :default: ""
+    - notes: TEXT
+      :default: ""
+    - skipped: BOOLEAN
+      :default: false
+    - session_type: TEXT
+    - skill: TEXT
+    - experience: INTEGER
+      :default: 150
+    - muscle_groups: TEXT ARRAY
+      :default: "{:full_body}"
+    - time_estimate_minutes: INTEGER
+      :default: 0
+    - kcal_per_minute_estimate: INTEGER
+      :default: 21
+    - user_id: TEXT
+    - user_cycle_id: TEXT
+    - workout_template_id: TEXT
+    - warmup_id: TEXT
+    - order: INTEGER
+      :default: 0
+    - completed: BOOLEAN
+      :default: false
+    - completed_warmup: BOOLEAN
+      :default: false
+    - started_at: TIMESTAMP WITHOUT TIME ZONE
+    - completed_at: TIMESTAMP WITHOUT TIME ZONE
+    - completed_early: BOOLEAN
+      :default: false
+    - completed_method: TEXT
+    - difficulty: TEXT
+    - delight: TEXT
+    - comments: TEXT
+    - data: JSON
+    - feedback: JSON
+    - share_image: TEXT
+    - sets:
+      :source: sets
+      :type: JSONB ARRAY
+      :default: "{}"
+    - completed_steps:
+      :source: sets
+      :type: JSONB ARRAY
+      :default: "{}"
+    # :related:
+    #   :workout_sets:
+    #     - id:
+    #       :source: sets[]._id
+    #       :type: TEXT
+    #       :primary_key: true
+    #     - subjekt_type:
+    #       :value: 'Workout'
+    #       :type: TEXT
+    #     - subjekt_id:
+    #       :source: _id
+    #       :type: TEXT
+    #     - name:
+    #       :source: sets[].name
+    #       :type: TEXT
+    #     - notes:
+    #       :source: sets[].notes
+    #       :type: TEXT
+    #     - time:
+    #       :source: sets[].time
+    #       :type: INTEGER
+    #     - steps:
+    #       :source: sets[].steps
+    #       :type: JSON ARRAY
+    #       :array_type: JSON
+    #   :workout_step_completeds:
+    #     - id:
+    #       :source: completed_steps[]._id
+    #       :type: TEXT
+    #       :primary_key: true
+    #     - workout_id:
+    #       :source: _id
+    #       :type: TEXT
+    #     - skipped:
+    #       :source: completed_steps[].name
+    #       :type: BOOLEAN
+    #     - notes:
+    #       :source: completed_steps[].notes
+    #       :type: TEXT
+    #     - time:
+    #       :source: completed_steps[].time
+    #       :type: INTEGER
+    #     - reps:
+    #       :source: completed_steps[].reps
+    #       :type: INTEGER
+    #     - completed_exercise_id:
+    #       :source: completed_steps[].completed_exercise_id
+    #       :type: TEXT
+    #     - started_at:
+    #       :source: completed_steps[].started_at
+    #       :type: TIMESTAMP WITHOUT TIME ZONE
+    #     - completed_at:
+    #       :source: completed_steps[].completed_at
+    #       :type: TIMESTAMP WITHOUT TIME ZONE
+    #     - completed_reps:
+    #       :source: completed_steps[].completed_reps
+    #       :type: INTEGER
+    :meta:
+      :table: workouts
+      :extra_props: true
