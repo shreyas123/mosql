@@ -1165,7 +1165,7 @@
       :type: JSONB ARRAY
       :default: "{}"
     - completed_steps:
-      :source: sets
+      :source: completed_steps
       :type: JSONB ARRAY
       :default: "{}"
     # :related:
