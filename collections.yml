@@ -1115,7 +1115,20 @@
     :meta:
       :table: workout_templates
       :extra_props: true
-
+  logs:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - user_id: TEXT
+    - created_by_id: TEXT
+    - type: TEXT
+    - body: TEXT
+    :meta:
+      :table: logs
+      :extra_props: true
   workouts:
     :columns:
     - id:
