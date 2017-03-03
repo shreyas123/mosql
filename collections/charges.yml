@@ -1,0 +1,25 @@
+8fit_production:
+  charges:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - raw: JSONB
+      :default: "{}"
+    - external_id: TEXT
+    - backend: TEXT
+    - status: TEXT
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - external_customer_id: TEXT
+    - external_subscription_id: TEXT
+    - subscription_plan: TEXT
+    - period_start_at: TIMESTAMP
+    - period_end_at: TIMESTAMP
+    - net_revenue_usd: FLOAT
+    - gross_value_usd: FLOAT
+    - customer_transaction_currency: TEXT
+    - customer_transaction_value: FLOAT
+    :meta:
+      :table: charges
+      :extra_props: true

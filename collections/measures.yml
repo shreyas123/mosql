@@ -1,0 +1,15 @@
+8fit_production:
+  measures:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - value: INTEGER
+      :default: 0
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - type: TEXT
+    - user_id: TEXT
+    :meta:
+      :table: measures
+      :extra_props: true

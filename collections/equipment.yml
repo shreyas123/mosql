@@ -1,0 +1,87 @@
+8fit_production:
+  equipment:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - name: JSONB
+    - exercise_ids: TEXT ARRAY
+    - updater_id: TEXT
+    - creator_id: TEXT
+    - version: INTEGER
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - image_content_type: TEXT
+    - image_file_name: TEXT
+    - image_file_size: INTEGER
+    - image_fingerprint: TEXT
+    - image_updated_at: timestamp without time zone
+    :related:
+      :equipment_exercises:
+        - exercise_id:
+          :source: exercise_ids[].$id
+          :type: TEXT
+        - equipment_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: equipment
+      :extra_props: true
+
+  exercises:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - version: INTEGER
+    - description: JSONB
+    - category: TEXT
+    - enabled: BOOLEAN
+      :default: false
+    - family: INTEGER
+    - identifier: INTEGER
+    - image_male_content_type: TEXT
+    - image_male_file_name: TEXT
+    - image_male_file_size: INTEGER
+    - image_male_fingerprint: TEXT
+    - image_male_updated_at: timestamp without time zone
+    - image_female_content_type: TEXT
+    - image_female_file_name: TEXT
+    - image_female_file_size: INTEGER
+    - image_female_fingerprint: TEXT
+    - image_female_updated_at: timestamp without time zone
+    - mh_id: INTEGER
+    - muscle_group: TEXT
+    - name: JSONB
+    - notes: JSONB
+    - seconds: FLOAT
+      :default: 1
+    - track_distance: BOOLEAN
+      :default: false
+    - variation: JSONB
+    - video_male_content_type: TEXT
+    - video_male_file_name: TEXT
+    - video_male_file_size: INTEGER
+    - video_male_fingerprint: TEXT
+    - video_male_updated_at: timestamp without time zone
+    - video_female_content_type: TEXT
+    - video_female_file_name: TEXT
+    - video_female_file_size: INTEGER
+    - video_female_fingerprint: TEXT
+    - video_female_updated_at: timestamp without time zone
+    - search_string: TEXT
+    - easier_alternative_id: TEXT
+    - harder_alternative_id: TEXT
+    - no_equipment_alternative_id: TEXT
+    - equipment_ids: TEXT ARRAY
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - creator_id: TEXT
+    - updater_id: TEXT
+    - kcal_hour: INTEGER
+    - subcategory: TEXT
+    - body: TEXT
+    :meta:
+      :table: exercises
+      :extra_props: true
+

@@ -1,0 +1,221 @@
+8fit_production:
+  users:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - action_running: TEXT
+    - actions: JSONB
+      :default: "[]"
+    - agent_autoresponded_at: timestamp without time zone
+    - agent_id: TEXT
+    - agent_rating: TEXT
+    - app_rating_comment: TEXT
+    - authentication_token: TEXT
+    - autodetected_timezone: TEXT
+      :default: Europe/Berlin
+    - constitution: TEXT
+      :default: average
+    - country: TEXT
+    - country_code: TEXT
+    - currency: TEXT
+    - current_sign_in_ip: TEXT
+    - email: TEXT
+      :default: ""
+    - encrypted_password: TEXT
+      :default: ""
+    - fb_pic: TEXT
+    - fb_token: TEXT
+    - first_day: TEXT
+      :default: monday
+    - gender: TEXT
+    - goal: TEXT
+    - idfa: TEXT
+    - ip: TEXT
+    - last_app_version: TEXT
+    - last_app_version_rated: TEXT
+    - last_client_native_version: TEXT
+    - last_client_platform: TEXT
+    - last_client_version: TEXT
+    - last_cta_clicked: TEXT
+    - last_message_excerpt: TEXT
+      :default: ""
+    - last_sign_in_ip: TEXT
+    - locale: TEXT
+      :default: en
+    - name: TEXT
+      :default: ""
+    - name_translations: JSONB
+    - next_workout_reminder_jid: TEXT
+    - next_workout_reminder_type: TEXT
+      :default: push
+    - notes: TEXT
+      :default: ""
+    - preferred_timezone: TEXT
+    - profile_image: TEXT
+    - reset_password_token: TEXT
+    - stripe_customer_id: TEXT
+    - support_email: TEXT
+    - test_group: TEXT
+    - trainer_id: TEXT
+    - trainer_rating: TEXT
+    - units: TEXT
+      :default: metric
+    - utm_campaign: TEXT
+    - utm_medium: TEXT
+    - utm_term: TEXT
+    - activity_level: Integer
+      :default: 1
+    - app_rating: Integer
+    - completed_meals_count: Integer
+      :default: 0
+    - completed_workouts_count: Integer
+      :default: 0
+    - daily_step_goal: Integer
+    - devices_count: Integer
+      :default: 0
+    - fb_id: TEXT
+    - friends_count: Integer
+      :default: 0
+    - height_cm: Integer
+    - kcal_correction: Integer
+      :default: 0
+    - meals_cache_counter: Integer
+      :default: 0
+    - measures_count: Integer
+      :default: 0
+    - messages_count: Integer
+      :default: 0
+    - next_workout_reminder_repeated: Integer
+      :default: 0
+    - num_meals: Integer
+      :default: 4
+    - sent_messages_count: Integer
+      :default: 0
+    - sessions: Integer
+      :default: 0
+    - sign_in_count: Integer
+      :default: 0
+    - strength_assessment: Integer
+    - weekly_activity_goal_meals: Integer
+      :default: 5
+    - weekly_activity_goal_workouts: Integer
+      :default: 4
+    - weekly_variety_breakfast: Integer
+      :default: 4
+    - weekly_variety_dinner: Integer
+      :default: 4
+    - weekly_variety_lunch: Integer
+      :default: 4
+    - weekly_variety_snack: Integer
+      :default: 4
+    - weight_gr: Integer
+    - agent_wrote_at: timestamp without time zone
+    - birthday: timestamp without time zone
+    - cancelation_requested_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - current_sign_in_at: timestamp without time zone
+    - last_app_rating_at: timestamp without time zone
+    - last_app_rating_opened_store_at: timestamp without time zone
+    - last_app_update_at: timestamp without time zone
+    - last_client_built_at: timestamp without time zone
+    - last_client_updated_at: timestamp without time zone
+    - last_message_at: timestamp without time zone
+    - last_message_sent_at: timestamp without time zone
+    - last_seen_at: timestamp without time zone
+    - last_sign_in_at: timestamp without time zone
+    - last_workout_completed_at: timestamp without time zone
+    - meal_plan_starts_at: timestamp without time zone
+    - needs_agent_at: timestamp without time zone
+    - needs_trainer_at: timestamp without time zone
+    - next_workout_reminder_at: timestamp without time zone
+    - remember_created_at: timestamp without time zone
+    - reset_password_sent_at: timestamp without time zone
+    - trainer_wrote_at: timestamp without time zone
+    - updated_at: timestamp without time zone
+    - body_fat: real
+    - body_fat_target: real
+    - can_message_trainer: boolean
+      :default: false
+    - customerio_enqueued: boolean
+      :default: false
+    - disabled: boolean
+      :default: false
+    - has_cancelation_feedback: boolean
+      :default: false
+    - has_fake_email: boolean
+      :default: false
+    - interactive_sound: boolean
+      :default: true
+    - motivational_emails: boolean
+      :default: true
+    - needs_agent: boolean
+      :default: false
+    - needs_trainer: boolean
+      :default: false
+    - onboarded: boolean
+      :default: false
+    - completed_exercises: JSONB
+      :default: "[]"
+    - diet_exclusions: JSONB
+      :default: '["soy"]'
+    - experiments: JSONB
+      :default: "{}"
+    - favorite_recipe_ids: JSONB
+      :default: "[]"
+    - fb_data: JSONB
+    - fb_friend_ids: JSONB
+      :default: "[]"
+    - fb_friends_raw: JSONB
+    - install_ids: JSONB
+      :default: "[]"
+    - last_strength_test: JSONB
+    - location: JSONB
+      :default: "{}"
+    - meal_categories: JSONB
+      :default: "[]"
+    - tag_ids: JSONB
+      :default: "[]"
+    - food_dislikes: TEXT ARRAY
+      :default: '[]'
+    - interests: JSONB
+    - effort_level: varchar
+    - utm_source: TEXT
+    - time_zone: TEXT
+    - subscription_id:
+      :source: subscription._id
+      :type: TEXT
+    :related:
+      :integrations:
+        - id:
+          :source: integrations[].$id
+          :type: TEXT
+          :primary_key: true
+        - created_at:
+          :source: integrations[].created_at
+          :type: timestamp without time zone
+        - updated_at:
+          :source: integrations[].updated_at
+          :type: timestamp without time zone
+        - source:
+          :source: integrations[].source
+          :type: TEXT
+        - token:
+          :source: integrations[].token
+          :type: TEXT
+        - enabled:
+          :source: integrations[].enabled
+          :type: BOOLEAN
+        - user_id:
+          :source: _id
+          :type: TEXT
+      :recipe_users:
+        - recipe_id:
+          :source: favorite_recipe_ids[].$id
+          :type: TEXT
+        - user_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: users
+      :extra_props: true

@@ -1,0 +1,81 @@
+8fit_production:
+  foods:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - category: TEXT
+    - amount: INTEGER
+    - carbs: FLOAT
+      :default: 0
+    - countries: TEXT
+    - external_reference: TEXT
+      :default: ""
+    - fat: FLOAT
+      :default: 0
+    - fiber: FLOAT
+      :default: 0
+    - format_imperial: TEXT
+    - format_metric: TEXT
+    - has_added_sugar: BOOLEAN
+      :default: false
+    - has_beef: BOOLEAN
+      :default: fals
+    - has_dairy: BOOLEAN
+      :default: false
+    - has_egg: BOOLEAN
+      :default: false
+    - has_fish: BOOLEAN
+      :default: false
+    - has_fruit: BOOLEAN
+      :default: false
+    - has_gluten: BOOLEAN
+      :default: false
+    - has_grains: BOOLEAN
+      :default: false
+    - has_lamb: BOOLEAN
+      :default: false
+    - has_legumes: BOOLEAN
+      :default: false
+    - has_meat: BOOLEAN
+    - has_nuts: BOOLEAN
+      :default: false
+    - has_pork: BOOLEAN
+      :default: false
+    - has_potato: BOOLEAN
+      :default: false
+    - has_poultry: BOOLEAN
+      :default: false
+    - has_red_meat: BOOLEAN
+      :default: false
+    - has_shellfish: BOOLEAN
+      :default: false
+    - has_soy: BOOLEAN
+      :default: false
+    - has_wheat: BOOLEAN
+    - is_breakfasty: BOOLEAN
+    - is_snacky: BOOLEAN
+    - measurement_type: TEXT
+    - level: INTEGER
+    - name: JSONB
+      :default: "{}"
+    - notes: TEXT
+    - popularity: INTEGER
+    - protein: FLOAT
+      :default: 0
+    - sugar: FLOAT
+      :default: 0
+    - quantity: FLOAT
+    - quantity_in_grams: INTEGER
+    - sodium: FLOAT
+      :default: 0
+    - state: TEXT
+    - subtype: TEXT
+    - canonical: TEXT
+    - units: TEXT
+    - updater_id: TEXT
+    - creator_id: TEXT
+    - version: INTEGER
+    :meta:
+      :table: foods
+      :extra_props: true

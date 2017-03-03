@@ -1,0 +1,30 @@
+8fit_production:
+  meals:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - user_id: TEXT
+    - date: DATE
+    - meal_block_id: TEXT
+    - target_kcal: INTEGER
+    - replaced: BOOLEAN
+      :default: false
+    - user_logged: BOOLEAN
+      :default: false
+    - image_identifier: TEXT
+    - name: TEXT
+    - image_file_name: TEXT
+    - image_content_type: TEXT
+    - image_file_size: INTEGER
+    - image_updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - image_fingerprint: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - status: TEXT
+    - portion_size: TEXT
+    - portion_quality: TEXT
+    - type: TEXT
+    :meta:
+      :table: meals
+      :extra_props: true

@@ -1,0 +1,14 @@
+8fit_production:
+  devices:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - app_id: TEXT
+    - created_at: timestamp without time zone
+    - token: TEXT
+    - updated_at: timestamp without time zone
+    - user_id: TEXT
+    :meta:
+      :table: devices
+      :extra_props: true

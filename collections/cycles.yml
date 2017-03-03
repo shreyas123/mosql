@@ -1,0 +1,61 @@
+8fit_production:
+  cycles:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - active: BOOLEAN
+    - background_content_type: TEXT
+    - background_file_name: TEXT
+    - background_file_size: INTEGER
+    - background_fingerprint: TEXT
+    - background_updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    - description: JSONB
+    - family: TEXT
+    - gender: TEXT
+    - icon_content_type: TEXT
+    - icon_file_name: TEXT
+    - icon_file_size: INTEGER
+    - icon_fingerprint: TEXT
+    - icon_updated_at: timestamp without time zone
+    - identifier: TEXT
+    - is_pro: BOOLEAN
+      :default: true
+    - lead: JSONB
+    - level: INTEGER
+    - name: JSONB
+    - phase: INTEGER
+      :default: 0
+    - title_en_content_type: TEXT
+    - title_en_file_name: TEXT
+    - title_en_file_size: INTEGER
+    - title_en_fingerprint: TEXT
+    - title_en_updated_at: timestamp without time zone
+    - title_es_content_type: TEXT
+    - title_es_file_name: TEXT
+    - title_es_file_size: INTEGER
+    - title_es_fingerprint: TEXT
+    - title_es_updated_at: timestamp without time zone
+    - updated_at: timestamp without time zone
+    - workout_template_ids: TEXT ARRAY
+    - updater_id: TEXT
+    - creator_id: TEXT
+    - background_blur_file_name: TEXT
+    - background_blur_content_type: TEXT
+    - background_blur_file_size: INTEGER
+    - background_blur_fingerprint: TEXT
+    - background_blur_updated_at: timestamp without time zone
+    - version: INTEGER
+    - modifier_id: TEXT
+    :related:
+      :cycle_workout_templates:
+        - workout_template_id:
+          :source: workout_template_ids[].$id
+          :type: TEXT
+        - cycle_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: cycles
+      :extra_props: true

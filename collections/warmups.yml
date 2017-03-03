@@ -1,0 +1,114 @@
+8fit_production:
+  warmups:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - name: TEXT
+    - identifier: INTEGER
+    - level: INTEGER
+    - video_female_file_name: TEXT
+    - video_female_content_type: TEXT
+    - video_female_file_size: INTEGER
+    - video_female_updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - video_female_fingerprint: TEXT
+    - video_female_seconds: INTEGER
+    - video_male_file_name: TEXT
+    - video_male_content_type: TEXT
+    - video_male_file_size: INTEGER
+    - video_male_updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - video_male_fingerprint: TEXT
+    - video_male_seconds: INTEGER
+    - type: TEXT
+    - steps:
+      :source: steps
+      :type: JSONB ARRAY
+      :default: "{}"
+    # :related:
+    #   :workout_steps:
+    #     - id:
+    #       :source: steps[]._id
+    #       :type: TEXT
+    #       :primary_key: true
+    #     - subjekt_type:
+    #       :value: 'Warmup'
+    #       :type: TEXT
+    #     - subjekt_id:
+    #       :source: _id
+    #       :type: TEXT
+    #     - exercise_id:
+    #       :source: steps[].exercise_id
+    #       :type: TEXT
+    #     - notes:
+    #       :source: steps[].notes
+    #       :type: TEXT
+    #     - time:
+    #       :source: steps[].time
+    #       :type: TEXT
+    #     - reps:
+    #       :source: steps[].reps
+    #       :type: TEXT
+    :meta:
+      :table: warmups
+      :extra_props: true
+
+  workout_templates:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - name: TEXT
+      :default: ""
+    - notes: TEXT
+      :default: ""
+    - skipped: BOOLEAN
+      :default: false
+    - session_type: TEXT
+    - skill: TEXT
+    - experience: INTEGER
+      :default: 150
+    - muscle_groups: TEXT ARRAY
+      :default: '{:full_body}'
+    - time_estimate_minutes: INTEGER
+      :default: 0
+    - kcal_per_minute_estimate: INTEGER
+      :default: 21
+    - creator_id: TEXT
+    - updater_id: TEXT
+    - version: INTEGER
+    - sets:
+      :source: sets
+      :type: JSONB ARRAY
+      :default: "{}"
+    # :related:
+    #   :workout_sets:
+    #     - id:
+    #       :source: sets[]._id
+    #       :type: TEXT
+    #       :primary_key: true
+    #     - subjekt_type:
+    #       :value: 'WorkoutTemplate'
+    #       :type: TEXT
+    #     - subjekt_id:
+    #       :source: _id
+    #       :type: TEXT
+    #     - name:
+    #       :source: sets[].name
+    #       :type: TEXT
+    #     - notes:
+    #       :source: sets[].notes
+    #       :type: TEXT
+    #     - time:
+    #       :source: sets[].time
+    #       :type: INTEGER
+    #     - steps:
+    #       :source: sets[].steps
+    #       :type: JSONB ARRAY
+    #       :array_type: JSONB
+    :meta:
+      :table: workout_templates
+      :extra_props: true

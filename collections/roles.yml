@@ -1,0 +1,19 @@
+8fit_production:
+  roles:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - name: TEXT
+    - user_ids: TEXT ARRAY
+    :related:
+      :role_users:
+        - user_id:
+          :source: user_ids[].$id
+          :type: TEXT
+        - role_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: roles
+      :extra_props: true

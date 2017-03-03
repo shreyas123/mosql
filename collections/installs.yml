@@ -1,0 +1,27 @@
+8fit_production:
+  installs:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - created_at: timestamp without time zone
+    - data: JSONB
+      :default: "{}"
+    - idfa: TEXT
+    - updated_at: timestamp without time zone
+    - attribution_provider: TEXT
+      :default: ""
+    - reattribution: BOOLEAN
+      :default: false
+    - invited_by_id: TEXT
+    :related:
+      :install_users:
+        - user_id:
+          :source: user_ids[].$id
+          :type: TEXT
+        - install_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: installs
+      :extra_props: true

@@ -1,0 +1,63 @@
+8fit_production:
+  subscriptions:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - creator_id: TEXT
+    - updater_id: TEXT
+    - version: INTEGER
+    - user_id_latest: TEXT
+    - user_id: TEXT
+    - external_id: TEXT
+    - transaction_idfa: TEXT
+    - started_at: TIMESTAMP WITHOUT TIME ZONE
+    - ends_at: TIMESTAMP WITHOUT TIME ZONE
+    - canceled_at: TIMESTAMP WITHOUT TIME ZONE
+    - plan: TEXT
+    - external_plan_id: TEXT
+    - coupon: TEXT
+    - status: TEXT
+    - card: JSONB
+      :default: "{}"
+    - external_customer_id: TEXT
+    - iap_receipt: TEXT
+    - latest_receipt: JSONB
+    - is_trialing: BOOLEAN
+      :default: false
+    - total_revenue: INTEGER
+      :default: 0
+    - first_time_net_revenue: INTEGER
+      :default: 0
+    - first_time_gross_revenue: INTEGER
+      :default: 0
+    - cta: TEXT
+    - transaction_platform: TEXT
+    - transaction_metadata: JSONB
+    - extended_period: INTEGER
+      :default: 0
+    - modifier_id: TEXT
+    - backend: TEXT
+    :meta:
+      :table: subscriptions
+      :extra_props: true
+
+  tags:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - name: TEXT
+    :related:
+      :tag_users:
+        - user_id:
+          :source: user_ids[].$id
+          :type: TEXT
+        - tag_id:
+          :source: _id
+          :type: TEXT
+    :meta:
+      :table: tags
+      :extra_props: true

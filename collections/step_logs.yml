@@ -1,0 +1,16 @@
+8fit_production:
+  step_logs:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - start_at: TIMESTAMP WITHOUT TIME ZONE
+    - distance_meters: FLOAT
+      :default: 0
+    - steps: INTEGER
+      :default: 0
+    - user_id: TEXT
+    :meta:
+      :table: step_logs
+      :extra_props: true
+

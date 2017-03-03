@@ -1,0 +1,20 @@
+8fit_production:
+  user_cycles:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - cycle_id: TEXT
+    - user_id: TEXT
+    - progress: INTEGER
+      :default: 0
+    - progress_target: INTEGER
+      :default: 0
+    - reason_joined: TEXT
+    - archived_at: TIMESTAMP WITHOUT TIME ZONE
+    - status: TEXT
+    :meta:
+      :table: user_cycles
+      :extra_props: true

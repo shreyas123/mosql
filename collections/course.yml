@@ -1,0 +1,15 @@
+8fit_production:
+  course_applications:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - course_id: INTEGER
+    - introduction: TEXT
+    - goals: TEXT
+    - user_id: TEXT
+    - updated_at: timestamp without time zone
+    - created_at: timestamp without time zone
+    :meta:
+      :table: course_applications
+      :extra_props: true
