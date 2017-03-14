@@ -12,6 +12,7 @@ db:
       - var: INTEGER
       - arry: INTEGER ARRAY
       - jsonbarr: JSONB ARRAY
+      - textarr: TEXT ARRAY
   with_extra_props:
     :meta:
       :table: sqltable2
@@ -46,7 +47,7 @@ EOF
   def table3; @sequel[:sqltable3]; end
 
   it 'Creates the tables with the right columns' do
-    assert_equal(Set.new([:_id, :var, :arry, :jsonbarr]),
+    assert_equal(Set.new([:_id, :var, :arry, :jsonbarr, :textarr]),
                  Set.new(table.columns))
     assert_equal(Set.new([:_id, :_extra_props]),
                  Set.new(table2.columns))
@@ -55,7 +56,7 @@ EOF
   it 'Can COPY data' do
     objects = [
                {'_id' => "a", 'var' => 0},
-               {'_id' => "b", 'var' => 1, 'arry' => "{1, 2, 3}"},
+               {'_id' => "b", 'var' => 1, 'arry' => "{1, 2, 3}", 'textarr' => "{'soy'}"},
                {'_id' => "c"},
                {'_id' => "d", 'other_var' => "hello"}
               ]

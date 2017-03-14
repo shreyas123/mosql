@@ -8,6 +8,7 @@ module MoSQL
       @schema = schema
       connect_db(uri, pgschema)
       @db.extension :pg_array, :pg_json
+      Sequel.extension(:pg_array_ops, :pg_json_ops)
     end
 
     def connect_db(uri, pgschema)

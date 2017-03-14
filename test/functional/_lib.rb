@@ -16,6 +16,7 @@ module MoSQL
 
     def connect_sql
       begin
+        Sequel.extension(:pg_array_ops)
         conn = Sequel.connect(sql_test_uri)
         conn.extension :pg_array, :pg_json
         conn.test_connection
