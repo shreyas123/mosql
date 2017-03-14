@@ -157,8 +157,8 @@
       :default: false
     - completed_exercises: JSONB
       :default: "[]"
-    - diet_exclusions: JSONB
-      :default: '["soy"]'
+    - diet_exclusions: TEXT ARRAY
+      :default: '{"soy"}'
     - experiments: JSONB
       :default: "{}"
     - favorite_recipe_ids: JSONB
@@ -188,7 +188,7 @@
     :related:
       :integrations:
         - id:
-          :source: integrations[].$id
+          :source: integrations[]._id
           :type: TEXT
           :primary_key: true
         - created_at:
@@ -211,7 +211,7 @@
           :type: TEXT
       :recipe_users:
         - recipe_id:
-          :source: favorite_recipe_ids[].$id
+          :source: favorite_recipe_ids[]._id
           :type: TEXT
         - user_id:
           :source: _id
@@ -230,7 +230,7 @@
     :related:
       :role_users:
         - user_id:
-          :source: user_ids[].$id
+          :source: user_ids[]._id
           :type: TEXT
         - role_id:
           :source: _id
@@ -411,7 +411,7 @@
     :related:
       :cycle_workout_templates:
         - workout_template_id:
-          :source: workout_template_ids[].$id
+          :source: workout_template_ids[]._id
           :type: TEXT
         - cycle_id:
           :source: _id
@@ -454,7 +454,7 @@
     :related:
       :equipment_exercises:
         - exercise_id:
-          :source: exercise_ids[].$id
+          :source: exercise_ids[]._id
           :type: TEXT
         - equipment_id:
           :source: _id
@@ -538,7 +538,7 @@
     :related:
       :install_users:
         - user_id:
-          :source: user_ids[].$id
+          :source: user_ids[]._id
           :type: TEXT
         - install_id:
           :source: _id
@@ -576,8 +576,8 @@
     - weekly_variety_lunch: INTEGER
     - weekly_variety_dinner: INTEGER
     - weekly_variety_snack: INTEGER
-    - diet_exclusions: JSONB
-      :default: '["soy"]'
+    - diet_exclusions: TEXT ARRAY
+      :default: '{}'
     - meal_categories: TEXT ARRAY
     - num_meals: INTEGER
       :default: 4
@@ -973,7 +973,7 @@
     :related:
       :tag_users:
         - user_id:
-          :source: user_ids[].$id
+          :source: user_ids[]._id
           :type: TEXT
         - tag_id:
           :source: _id
@@ -1129,6 +1129,7 @@
     :meta:
       :table: logs
       :extra_props: true
+
   workouts:
     :columns:
     - id:

@@ -53,7 +53,7 @@
     :related:
       :tag_users:
         - user_id:
-          :source: user_ids[].$id
+          :source: user_ids[]._id
           :type: TEXT
         - tag_id:
           :source: _id

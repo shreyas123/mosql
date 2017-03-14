@@ -157,8 +157,8 @@
       :default: false
     - completed_exercises: JSONB
       :default: "[]"
-    - diet_exclusions: JSONB
-      :default: '["soy"]'
+    - diet_exclusions: TEXT ARRAY
+      :default: '{"soy"}'
     - experiments: JSONB
       :default: "{}"
     - favorite_recipe_ids: JSONB
@@ -188,7 +188,7 @@
     :related:
       :integrations:
         - id:
-          :source: integrations[].$id
+          :source: integrations[]._id
           :type: TEXT
           :primary_key: true
         - created_at:
@@ -211,7 +211,7 @@
           :type: TEXT
       :recipe_users:
         - recipe_id:
-          :source: favorite_recipe_ids[].$id
+          :source: favorite_recipe_ids[]._id
           :type: TEXT
         - user_id:
           :source: _id

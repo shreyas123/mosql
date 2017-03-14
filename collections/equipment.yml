@@ -19,7 +19,7 @@
     :related:
       :equipment_exercises:
         - exercise_id:
-          :source: exercise_ids[].$id
+          :source: exercise_ids[]._id
           :type: TEXT
         - equipment_id:
           :source: _id

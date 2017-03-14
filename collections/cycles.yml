@@ -51,7 +51,7 @@
     :related:
       :cycle_workout_templates:
         - workout_template_id:
-          :source: workout_template_ids[].$id
+          :source: workout_template_ids[]._id
           :type: TEXT
         - cycle_id:
           :source: _id

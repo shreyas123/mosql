@@ -17,7 +17,7 @@
     :related:
       :install_users:
         - user_id:
-          :source: user_ids[].$id
+          :source: user_ids[]._id
           :type: TEXT
         - install_id:
           :source: _id
