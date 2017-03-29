@@ -218,7 +218,6 @@
           :type: TEXT
     :meta:
       :table: users
-      :extra_props: true
 
   roles:
     :columns:
@@ -226,7 +225,6 @@
       :source: _id
       :type: TEXT
     - name: TEXT
-    - user_ids: TEXT ARRAY
     :related:
       :role_users:
         - user_id:
@@ -237,7 +235,6 @@
           :type: TEXT
     :meta:
       :table: roles
-      :extra_props: true
 
   foods:
     :columns:
@@ -318,7 +315,6 @@
     - version: INTEGER
     :meta:
       :table: foods
-      :extra_props: true
 
   charges:
     :columns:
@@ -343,7 +339,6 @@
     - customer_transaction_value: FLOAT
     :meta:
       :table: charges
-      :extra_props: true
   course_applications:
     :columns:
     - id:
@@ -357,7 +352,6 @@
     - created_at: timestamp without time zone
     :meta:
       :table: course_applications
-      :extra_props: true
 
   cycles:
     :columns:
@@ -418,7 +412,6 @@
           :type: TEXT
     :meta:
       :table: cycles
-      :extra_props: true
 
   devices:
     :columns:
@@ -432,7 +425,6 @@
     - user_id: TEXT
     :meta:
       :table: devices
-      :extra_props: true
 
   equipment:
     :columns:
@@ -440,7 +432,6 @@
       :source: _id
       :type: TEXT
     - name: JSONB
-    - exercise_ids: TEXT ARRAY
     - updater_id: TEXT
     - creator_id: TEXT
     - version: INTEGER
@@ -461,7 +452,6 @@
           :type: TEXT
     :meta:
       :table: equipment
-      :extra_props: true
 
   exercises:
     :columns:
@@ -508,7 +498,6 @@
     - easier_alternative_id: TEXT
     - harder_alternative_id: TEXT
     - no_equipment_alternative_id: TEXT
-    - equipment_ids: TEXT ARRAY
     - updated_at: timestamp without time zone
     - created_at: timestamp without time zone
     - creator_id: TEXT
@@ -518,7 +507,6 @@
     - body: TEXT
     :meta:
       :table: exercises
-      :extra_props: true
 
   installs:
     :columns:
@@ -545,7 +533,6 @@
           :type: TEXT
     :meta:
       :table: installs
-      :extra_props: true
 
   invites:
     :columns:
@@ -561,7 +548,6 @@
     - created_at: timestamp without time zone
     :meta:
       :table: invites
-      :extra_props: true
 
   meal_plan_snapshots:
     :columns:
@@ -584,10 +570,9 @@
     - updated_at: TIMESTAMP WITHOUT TIME ZONE
     - created_at: TIMESTAMP WITHOUT TIME ZONE
     - food_dislikes: TEXT ARRAY
-      :default: '[]'
+      :default: '{}'
     :meta:
       :table: meal_plan_snapshots
-      :extra_props: true
 
   meals:
     :columns:
@@ -617,7 +602,6 @@
     - type: TEXT
     :meta:
       :table: meals
-      :extra_props: true
 
   measures:
     :columns:
@@ -632,7 +616,6 @@
     - user_id: TEXT
     :meta:
       :table: measures
-      :extra_props: true
 
   message_templates:
     :columns:
@@ -649,7 +632,6 @@
     - type: TEXT
     :meta:
       :table: message_templates
-      :extra_props: true
 
   messages:
     :columns:
@@ -678,7 +660,6 @@
     - rating: TEXT
     :meta:
       :table: messages
-      :extra_props: true
 
   plans:
     :columns:
@@ -714,7 +695,6 @@
     - backend: TEXT
     :meta:
       :table: plans
-      :extra_props: true
 
   recipes:
     :columns:
@@ -885,7 +865,6 @@
           :default: true
     :meta:
       :table: recipes
-      :extra_props: true
 
   shopping_lists:
     :columns:
@@ -902,7 +881,6 @@
     - meal_plan_snapshot_id: TEXT
     :meta:
       :table: shopping_lists
-      :extra_props: true
 
   step_logs:
     :columns:
@@ -917,7 +895,6 @@
     - user_id: TEXT
     :meta:
       :table: step_logs
-      :extra_props: true
 
   subscriptions:
     :columns:
@@ -962,7 +939,6 @@
     - backend: TEXT
     :meta:
       :table: subscriptions
-      :extra_props: true
 
   tags:
     :columns:
@@ -980,7 +956,6 @@
           :type: TEXT
     :meta:
       :table: tags
-      :extra_props: true
 
   user_cycles:
     :columns:
@@ -1000,7 +975,6 @@
     - status: TEXT
     :meta:
       :table: user_cycles
-      :extra_props: true
 
   warmups:
     :columns:
@@ -1055,7 +1029,6 @@
     #       :type: TEXT
     :meta:
       :table: warmups
-      :extra_props: true
 
   workout_templates:
     :columns:
@@ -1114,7 +1087,6 @@
     #       :array_type: JSONB
     :meta:
       :table: workout_templates
-      :extra_props: true
   logs:
     :columns:
     - id:
@@ -1128,7 +1100,6 @@
     - body: TEXT
     :meta:
       :table: logs
-      :extra_props: true
 
   workouts:
     :columns:
@@ -1241,4 +1212,3 @@
     #       :type: INTEGER
     :meta:
       :table: workouts
-      :extra_props: true
