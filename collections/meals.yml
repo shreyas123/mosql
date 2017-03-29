@@ -27,4 +27,3 @@
     - type: TEXT
     :meta:
       :table: meals
-      :extra_props: true

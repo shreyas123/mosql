@@ -78,4 +78,3 @@
     - version: INTEGER
     :meta:
       :table: foods
-      :extra_props: true

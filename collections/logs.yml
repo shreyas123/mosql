@@ -12,5 +12,3 @@
     - body: TEXT
     :meta:
       :table: logs
-      :extra_props: true
-

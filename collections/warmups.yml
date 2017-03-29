@@ -26,33 +26,8 @@
       :source: steps
       :type: JSONB ARRAY
       :default: "{}"
-    # :related:
-    #   :workout_steps:
-    #     - id:
-    #       :source: steps[]._id
-    #       :type: TEXT
-    #       :primary_key: true
-    #     - subjekt_type:
-    #       :value: 'Warmup'
-    #       :type: TEXT
-    #     - subjekt_id:
-    #       :source: _id
-    #       :type: TEXT
-    #     - exercise_id:
-    #       :source: steps[].exercise_id
-    #       :type: TEXT
-    #     - notes:
-    #       :source: steps[].notes
-    #       :type: TEXT
-    #     - time:
-    #       :source: steps[].time
-    #       :type: TEXT
-    #     - reps:
-    #       :source: steps[].reps
-    #       :type: TEXT
     :meta:
       :table: warmups
-      :extra_props: true
 
   workout_templates:
     :columns:
@@ -84,31 +59,6 @@
       :source: sets
       :type: JSONB ARRAY
       :default: "{}"
-    # :related:
-    #   :workout_sets:
-    #     - id:
-    #       :source: sets[]._id
-    #       :type: TEXT
-    #       :primary_key: true
-    #     - subjekt_type:
-    #       :value: 'WorkoutTemplate'
-    #       :type: TEXT
-    #     - subjekt_id:
-    #       :source: _id
-    #       :type: TEXT
-    #     - name:
-    #       :source: sets[].name
-    #       :type: TEXT
-    #     - notes:
-    #       :source: sets[].notes
-    #       :type: TEXT
-    #     - time:
-    #       :source: sets[].time
-    #       :type: INTEGER
-    #     - steps:
-    #       :source: sets[].steps
-    #       :type: JSONB ARRAY
-    #       :array_type: JSONB
     :meta:
       :table: workout_templates
-      :extra_props: true
+

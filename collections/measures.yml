@@ -12,4 +12,4 @@
     - user_id: TEXT
     :meta:
       :table: measures
-      :extra_props: true
+

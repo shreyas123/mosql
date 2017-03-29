@@ -42,7 +42,6 @@
     - backend: TEXT
     :meta:
       :table: subscriptions
-      :extra_props: true
 
   tags:
     :columns:
@@ -60,4 +59,4 @@
           :type: TEXT
     :meta:
       :table: tags
-      :extra_props: true
+

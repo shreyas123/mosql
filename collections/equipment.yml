@@ -5,7 +5,6 @@
       :source: _id
       :type: TEXT
     - name: JSONB
-    - exercise_ids: TEXT ARRAY
     - updater_id: TEXT
     - creator_id: TEXT
     - version: INTEGER
@@ -26,7 +25,6 @@
           :type: TEXT
     :meta:
       :table: equipment
-      :extra_props: true
 
   exercises:
     :columns:
@@ -73,7 +71,6 @@
     - easier_alternative_id: TEXT
     - harder_alternative_id: TEXT
     - no_equipment_alternative_id: TEXT
-    - equipment_ids: TEXT ARRAY
     - updated_at: timestamp without time zone
     - created_at: timestamp without time zone
     - creator_id: TEXT
@@ -83,5 +80,3 @@
     - body: TEXT
     :meta:
       :table: exercises
-      :extra_props: true
-

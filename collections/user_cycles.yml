@@ -17,4 +17,4 @@
     - status: TEXT
     :meta:
       :table: user_cycles
-      :extra_props: true
+

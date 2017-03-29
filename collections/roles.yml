@@ -5,7 +5,6 @@
       :source: _id
       :type: TEXT
     - name: TEXT
-    - user_ids: TEXT ARRAY
     :related:
       :role_users:
         - user_id:
@@ -16,4 +15,3 @@
           :type: TEXT
     :meta:
       :table: roles
-      :extra_props: true

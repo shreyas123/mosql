@@ -11,4 +11,4 @@
     - user_id: TEXT
     :meta:
       :table: devices
-      :extra_props: true
+

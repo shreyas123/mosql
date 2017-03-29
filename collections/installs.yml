@@ -24,4 +24,4 @@
           :type: TEXT
     :meta:
       :table: installs
-      :extra_props: true
+

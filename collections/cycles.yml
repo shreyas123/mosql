@@ -58,4 +58,3 @@
           :type: TEXT
     :meta:
       :table: cycles
-      :extra_props: true

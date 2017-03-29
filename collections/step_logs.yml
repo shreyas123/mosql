@@ -12,5 +12,4 @@
     - user_id: TEXT
     :meta:
       :table: step_logs
-      :extra_props: true
 

@@ -22,4 +22,3 @@
     - customer_transaction_value: FLOAT
     :meta:
       :table: charges
-      :extra_props: true

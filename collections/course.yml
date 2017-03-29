@@ -12,4 +12,4 @@
     - created_at: timestamp without time zone
     :meta:
       :table: course_applications
-      :extra_props: true
+

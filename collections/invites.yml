@@ -13,7 +13,6 @@
     - created_at: timestamp without time zone
     :meta:
       :table: invites
-      :extra_props: true
 
   meal_plan_snapshots:
     :columns:
@@ -28,15 +27,15 @@
     - weekly_variety_lunch: INTEGER
     - weekly_variety_dinner: INTEGER
     - weekly_variety_snack: INTEGER
-    - diet_exclusions: JSONB
-      :default: '["soy"]'
+    - diet_exclusions: TEXT ARRAY
+      :default: '{}'
     - meal_categories: TEXT ARRAY
     - num_meals: INTEGER
       :default: 4
     - updated_at: TIMESTAMP WITHOUT TIME ZONE
     - created_at: TIMESTAMP WITHOUT TIME ZONE
     - food_dislikes: TEXT ARRAY
-      :default: '[]'
+      :default: '{}'
     :meta:
       :table: meal_plan_snapshots
-      :extra_props: true
+

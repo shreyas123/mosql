@@ -177,7 +177,7 @@
     - tag_ids: JSONB
       :default: "[]"
     - food_dislikes: TEXT ARRAY
-      :default: '[]'
+      :default: '{}'
     - interests: JSONB
     - effort_level: varchar
     - utm_source: TEXT
@@ -218,4 +218,3 @@
           :type: TEXT
     :meta:
       :table: users
-      :extra_props: true

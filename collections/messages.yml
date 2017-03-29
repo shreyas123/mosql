@@ -14,7 +14,6 @@
     - type: TEXT
     :meta:
       :table: message_templates
-      :extra_props: true
 
   messages:
     :columns:
@@ -43,7 +42,6 @@
     - rating: TEXT
     :meta:
       :table: messages
-      :extra_props: true
 
   plans:
     :columns:
@@ -79,7 +77,6 @@
     - backend: TEXT
     :meta:
       :table: plans
-      :extra_props: true
 
   recipes:
     :columns:
@@ -250,7 +247,6 @@
           :default: true
     :meta:
       :table: recipes
-      :extra_props: true
 
   shopping_lists:
     :columns:
@@ -267,5 +263,4 @@
     - meal_plan_snapshot_id: TEXT
     :meta:
       :table: shopping_lists
-      :extra_props: true
 
