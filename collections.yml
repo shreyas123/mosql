@@ -1003,30 +1003,6 @@
       :source: steps
       :type: JSONB ARRAY
       :default: "{}"
-    # :related:
-    #   :workout_steps:
-    #     - id:
-    #       :source: steps[]._id
-    #       :type: TEXT
-    #       :primary_key: true
-    #     - subjekt_type:
-    #       :value: 'Warmup'
-    #       :type: TEXT
-    #     - subjekt_id:
-    #       :source: _id
-    #       :type: TEXT
-    #     - exercise_id:
-    #       :source: steps[].exercise_id
-    #       :type: TEXT
-    #     - notes:
-    #       :source: steps[].notes
-    #       :type: TEXT
-    #     - time:
-    #       :source: steps[].time
-    #       :type: TEXT
-    #     - reps:
-    #       :source: steps[].reps
-    #       :type: TEXT
     :meta:
       :table: warmups
 
@@ -1060,31 +1036,6 @@
       :source: sets
       :type: JSONB ARRAY
       :default: "{}"
-    # :related:
-    #   :workout_sets:
-    #     - id:
-    #       :source: sets[]._id
-    #       :type: TEXT
-    #       :primary_key: true
-    #     - subjekt_type:
-    #       :value: 'WorkoutTemplate'
-    #       :type: TEXT
-    #     - subjekt_id:
-    #       :source: _id
-    #       :type: TEXT
-    #     - name:
-    #       :source: sets[].name
-    #       :type: TEXT
-    #     - notes:
-    #       :source: sets[].notes
-    #       :type: TEXT
-    #     - time:
-    #       :source: sets[].time
-    #       :type: INTEGER
-    #     - steps:
-    #       :source: sets[].steps
-    #       :type: JSONB ARRAY
-    #       :array_type: JSONB
     :meta:
       :table: workout_templates
   logs:
@@ -1153,62 +1104,5 @@
       :source: completed_steps
       :type: JSONB ARRAY
       :default: "{}"
-    # :related:
-    #   :workout_sets:
-    #     - id:
-    #       :source: sets[]._id
-    #       :type: TEXT
-    #       :primary_key: true
-    #     - subjekt_type:
-    #       :value: 'Workout'
-    #       :type: TEXT
-    #     - subjekt_id:
-    #       :source: _id
-    #       :type: TEXT
-    #     - name:
-    #       :source: sets[].name
-    #       :type: TEXT
-    #     - notes:
-    #       :source: sets[].notes
-    #       :type: TEXT
-    #     - time:
-    #       :source: sets[].time
-    #       :type: INTEGER
-    #     - steps:
-    #       :source: sets[].steps
-    #       :type: JSONB ARRAY
-    #       :array_type: JSONB
-    #   :workout_step_completeds:
-    #     - id:
-    #       :source: completed_steps[]._id
-    #       :type: TEXT
-    #       :primary_key: true
-    #     - workout_id:
-    #       :source: _id
-    #       :type: TEXT
-    #     - skipped:
-    #       :source: completed_steps[].name
-    #       :type: BOOLEAN
-    #     - notes:
-    #       :source: completed_steps[].notes
-    #       :type: TEXT
-    #     - time:
-    #       :source: completed_steps[].time
-    #       :type: INTEGER
-    #     - reps:
-    #       :source: completed_steps[].reps
-    #       :type: INTEGER
-    #     - completed_exercise_id:
-    #       :source: completed_steps[].completed_exercise_id
-    #       :type: TEXT
-    #     - started_at:
-    #       :source: completed_steps[].started_at
-    #       :type: TIMESTAMP WITHOUT TIME ZONE
-    #     - completed_at:
-    #       :source: completed_steps[].completed_at
-    #       :type: TIMESTAMP WITHOUT TIME ZONE
-    #     - completed_reps:
-    #       :source: completed_steps[].completed_reps
-    #       :type: INTEGER
     :meta:
       :table: workouts
