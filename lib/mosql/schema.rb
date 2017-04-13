@@ -293,13 +293,11 @@ module MoSQL
 
       row = []
       schema[:columns].each do |col|
-
         if col[:default]
           v = col[:default]
         elsif col[:default_function]
           v = Sequel.function(col[:default_function].to_sym)
         end
-
 
         if col[:value]
           v = col[:value]
@@ -340,7 +338,7 @@ module MoSQL
               v = JSON.dump(v)
             end
           else
-            v = transform_primitive(v, type)
+            v = transform_primitive(v, type) || col[:default]
           end
         end
         row << v

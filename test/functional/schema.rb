@@ -13,6 +13,10 @@ db:
       - arry: INTEGER ARRAY
       - jsonbarr: JSONB ARRAY
       - textarr: TEXT ARRAY
+      - default_col:
+        :source: default_col
+        :type: TEXT
+        :default: 'default_val'
   with_extra_props:
     :meta:
       :table: sqltable2
@@ -47,18 +51,20 @@ EOF
   def table3; @sequel[:sqltable3]; end
 
   it 'Creates the tables with the right columns' do
-    assert_equal(Set.new([:_id, :var, :arry, :jsonbarr, :textarr]),
+    assert_equal(Set.new([:_id, :var, :arry, :jsonbarr, :textarr, :default_col]),
                  Set.new(table.columns))
     assert_equal(Set.new([:_id, :_extra_props]),
                  Set.new(table2.columns))
+    assert_equal(Set.new([:_id, :_extra_props, :var_a, :var_b]),
+                 Set.new(table3.columns))
   end
 
   it 'Can COPY data' do
     objects = [
                {'_id' => "a", 'var' => 0},
                {'_id' => "b", 'var' => 1, 'arry' => "{1, 2, 3}", 'textarr' => "{'soy'}"},
-               {'_id' => "c"},
-               {'_id' => "d", 'other_var' => "hello"}
+               {'_id' => "c", 'default_col' => nil},
+               {'_id' => "d", 'other_var' => "hello", 'default_col' => 'value_present'}
               ]
     @map.copy_data(@sequel, 'db.collection', objects.map { |o| @map.transform('db.collection', o) } )
     assert_equal(4, table.count)
@@ -67,6 +73,7 @@ EOF
     assert_equal(nil, rows[2][:var])
     assert_equal(nil, rows[3][:var])
     assert_equal([1 ,2, 3], rows[1][:arry])
+    assert_equal(%w[default_val default_val default_val value_present], rows.map { |r| r[:default_col] })
   end
 
   it 'Can COPY dotted data' do
