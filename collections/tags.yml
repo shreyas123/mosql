@@ -1,0 +1,18 @@
+8fit_production:
+  tags:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - name: TEXT
+    :related:
+      :tag_users:
+        - user_id:
+          :source: user_ids[]._id
+          :type: TEXT
+        - tag_id:
+          :source: _id
+          :type: TEXT
+          :primary_key: true
+    :meta:
+      :table: tags
