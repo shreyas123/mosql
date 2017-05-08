@@ -338,7 +338,10 @@ module MoSQL
               v = JSON.dump(v)
             end
           else
-            v = transform_primitive(v, type) || col[:default]
+            v = transform_primitive(v, type)
+            if v.nil? && !col[:default].nil?
+              v = col[:default]
+            end
           end
         end
         row << v
