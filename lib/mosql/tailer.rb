@@ -1,3 +1,5 @@
+require 'active_support/all'
+
 module MoSQL
   class Tailer < Mongoriver::AbstractPersistentTailer
     def self.create_table(db, tablename)
