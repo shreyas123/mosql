@@ -32,4 +32,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "mocha"
   gem.add_development_dependency "pry-byebug"
   gem.add_development_dependency "m"
+  gem.add_development_dependency "activesupport"
 end
