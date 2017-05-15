@@ -1,0 +1,35 @@
+8fit_production:
+  plans:
+    :columns:
+    - id:
+      :source: _id
+      :type: TEXT
+    - updated_at: TIMESTAMP WITHOUT TIME ZONE
+    - created_at: TIMESTAMP WITHOUT TIME ZONE
+    - identifier: TEXT
+    - external_identifier:  TEXT
+    - enabled: BOOLEAN
+      :default: false
+    - period: INTEGER
+    - trial_period_days: INTEGER
+      :default: 0
+    - can_message_trainer: BOOLEAN
+      :default: false
+    - approx_initial_revenue: INTEGER
+      :default: 0
+    - approx_initial_net_revenue: INTEGER
+      :default: 0
+    - device_currency: TEXT
+    - device_currency_symbol: TEXT
+    - device_amount: INTEGER
+    - device_amount_display: TEXT
+    - device_discount_display: TEXT
+    - device_available: BOOLEAN
+      :default: false
+    - allows_7d_refund: BOOLEAN
+      :default: true
+    - meals_delivery: TEXT
+    - period_name: TEXT
+    - backend: TEXT
+    :meta:
+      :table: plans
